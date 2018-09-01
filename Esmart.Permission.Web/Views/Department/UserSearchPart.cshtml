@@ -1,0 +1,89 @@
+﻿@using Esmart.Permission.Web.Models.Common
+
+<style>
+    @@media screen and (max-width:1400px) {
+        .form input { width: 100px; }
+    }
+</style>
+
+<div class="">
+    <div class="form-group col-lg-3 col-md-3">
+        <div class="input-group">
+            <span class="input-group-btn">
+                <button class="btn btn-default">
+                    工号
+                </button>
+            </span>
+            <input type="text" name="WorkNo" class="form-control" maxlength="20" />
+        </div>
+    </div>
+
+    <div class="form-group col-lg-3 col-md-3">
+        <div class="input-group">
+            <span class="input-group-btn">
+                <button class="btn btn-default">
+                    真实姓名
+                </button>
+            </span>
+            <input type="text" name="TrueName" class="form-control" maxlength="20" />
+        </div>
+    </div>
+
+    <div class="form-group col-lg-3 col-md-3">
+        <div class="input-group">
+            <span class="input-group-btn">
+                <button class="btn btn-default">
+                    英文名
+                </button>
+            </span>
+            <input type="text" name="Ename" class="form-control" maxlength="30" />
+        </div>
+    </div>
+
+    <div class="form-group col-lg-4 col-md-4">
+        <button type="submit" class="btn btn-primary" onclick="dataPage.search(1)">查 询</button>
+        @if (ViewBag.Permission.Contains(PermissionCons.permission_user_add))
+        {
+            <input type="button" class="btn btn-primary" value="新增用户" onclick="addUser()" />
+            <input type="button" class="btn btn-primary" value="调入用户"  style="visibility:hidden" onclick="AddExistingUser()" />
+        }
+    </div>
+</div>
+
+
+<script>
+
+
+    function addUser() {
+        var depId = $("#hidDepId").val();
+        depId = parseInt(depId);
+        if (depId === 0) {
+            tpo.alert("请先选择部门");
+            return;
+        }
+        main.model('@Url.Action("UserEdit")?act=add&id=' + depId, {
+            title: '添加用户'
+        });
+        return false;
+    }
+    function AddExistingUser() {
+        var depId = $("#hidDepId").val();
+        depId = parseInt(depId);
+        if (depId === 0) {
+            tpo.alert("请先选择部门");
+            return;
+        }
+        main.model('@Url.Action("AddExistingUser")?id=' + depId, {
+            initData: function (data) {
+                var value = magicSuggest.users.getValue();
+                if (value) {
+                    data.departmentId = depId;
+                    data.userIds = value.join();
+                }
+                return data;
+            },
+            title: '调入用户'
+        });
+        return false;
+    }
+</script>

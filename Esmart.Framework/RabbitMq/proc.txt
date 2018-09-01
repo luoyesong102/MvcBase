@@ -1,0 +1,95 @@
+﻿configure
+主机(如。主机=主机或主机= 192.168.2.56或主机= myhost.mydomain.com)这个字段是必需的。指定要连接端口,您可以使用标准格式主持人:端口(例如主机= myhost.com:5673)。如果您省略的端口号,默认AMQP使用端口(5672)。连接到RabbitMQ集群,每个集群节点指定由逗号分隔(例如主机= myhost1.com,myhost2.com,myhost1.com)。更多细节请参见集群支持。
+虚拟主机(如。虚拟主机= myVirtualHost)默认是默认虚拟主机' / '
+用户名(如。用户名=迈克)默认是“客人”(非“localhost”比“客人”主机需要其他用户)
+密码(如。密码= mysecret)默认是“客人”
+requestedHeartbeat(如。requestedHeartbeat = 10)默认是10秒。没有心跳的设置为0。
+prefetchcount(如。prefetchcount = 1)默认是50。这是消息的数量将由RabbitMQ EasyNetQ ack之前。设置为0,无限的预取(不推荐)。设置为1消费者的公平平衡在一个农场工作。
+publisherConfirms(如。publisherConfirms = true)默认是假的。这对出版商证实。
+persistentMessages(如。persistentMessages = false)默认是正确的。这决定了delivery_mode基础。属性设置消息时出版。假= 1,真= 2。当该值设置成真时,消息将被持久化到磁盘RabbitMQ服务器重启和生存。时可以预期性能设置为false。
+产品(如。产品=我的非常重要的服务)介绍了EasyNetQ 0.27.3。默认值是可执行文件的名称,实例化公共汽车。所输入的值将显示在RabbitMQ的管理界面。
+平台(如。平台= my.fully.qualified.domain.name)介绍了EasyNetQ 0.27.3。默认值是运行客户端机器的主机名的过程实例化公共汽车。所输入的值将显示在RabbitMQ的管理界面。
+超时(e。g超时= 60)默认是10秒。是在EasyNetQ 0.17中引入的。解析System.UInt16型。从0到65535不等。格式是在几秒钟内。为无限超时请用0。把系统。TimeoutException当价值超过了。
+
+
+queue
+
+				//  string name, 
+                // 队列的名称
+                //    bool passive = false, 
+                //  不要创建队列,如果不存在,false则创建，否则抛出一个异常
+                //    bool durable = true, 
+                //  可以在服务器重启。如果这是假的队列服务器重启时将被删除。(默认正确)
+                //    bool exclusive = false, 
+                // 只能由当前连接访问
+                //    bool autoDelete = false,
+                // 删除队列所有消费者一旦断开连接。(默认错误)
+                //    int? perQueueMessageTtl  = null, 
+                // 多长时间以毫秒为单位的消息应该保持队列之前就会被丢弃
+                //    int? expires = null,
+                // 多长时间以毫秒为单位的队列前应该保持未使用自动删除
+                //    byte? maxPriority = null,
+                // 决定了最大消息优先级队列应该支持
+                //    string deadLetterExchange = null, 
+                // 决定一个交换的名字可以自动删除前仍未使用的服务器
+                //    string deadLetterRoutingKey = null,
+                //如果设置,将路由消息的路由关键指定,如果不设置,消息将路由到相同的路由钥匙他们出版。 
+                //    int? maxLength = null,
+                // 最大数量的就绪队列上的消息可能存在的。消息将被丢弃或死信队列的前面,为新消息一旦达到极限。
+                //    int? maxLengthBytes = null队列的最大大小(以字节为单位。消息将被丢弃或死信队列的前面,为新消息一旦达到极限
+
+交换机
+            channel.ExchangeDeclare("aa", "topic", true, false,null);
+            // name:交换你想创造的名称string exchange, string type, bool durable, bool autoDelete
+            //type:交换器的类型。它必须是一个有效的AMQP交换类型。使用静态安全属性ExchangeType类的声明交流。
+            //passive被动:不要创建一个交换。如果指定的交易不存在,抛出异常。(默认错误)
+            //durable:生存服务器重启。如果这个参数是错误的,交易所将被删除当服务器重启。(默认正确)
+            //autoDelete:删除这个交易当最后一个队列是不受约束的。(默认错误)
+            //@internal:这个交易不能直接使用的出版商,但只有通过交换使用
+            //交换绑定。(默认错误)
+            //alternateExchange:路由消息交换如果他们不能路由。
+            //delayed:如果设置,declars x-delayed-type交换路由延迟信息。
+
+
+            //ConnectionFactory属性--  channel--属性--交换机属性--队列属性--绑定属性-pub属性-sub属性
+            //http://www.knowsky.com/898482.html 无交换机的分发机制
+            //http://blog.csdn.net/zyz511919766/article/details/41946521 五种场景
+            //http://www.cnblogs.com/wangiqngpei557/p/4751124.html 封装技巧
+            //http://blog.csdn.net/zyz511919766/article/details/41946521 五种场景
+            //http://www.cnblogs.com/aarond/p/rabbitmq.html 队列优先级别
+            //http://easynetq.com/  封装DLL(连接生产订阅，监控)--桌面版本操作，web自带
+
+订阅-公平消费
+			 var customer = new EventingBasicConsumer(channel);
+            channel.BasicQos(0, 1, false);
+            customer.Received += ReceiveMessage;
+            channel.BasicConsume("queue_name", false, customer);
+
+
+			 var customer = new EventingBasicConsumer(channel);
+            customer.Received += ReceiveMessage;
+            channel.BasicConsume("queue_name", false, customer);
+
+发布
+			 var a = Newtonsoft.Json.JsonConvert.SerializeObject(msgModel); ;//这个才是具体的发送内容
+                var properties = channel.CreateBasicProperties();
+                properties.SetPersistent(true);
+                channel.BasicPublish(Change, routingkeyvalue, null, Encoding.UTF8.GetBytes(a));
+
+公平消费-发布
+				   var a = Newtonsoft.Json.JsonConvert.SerializeObject(msgModel); ;//这个才是具体的发送内容
+                var properties = channel.CreateBasicProperties();
+                properties.SetPersistent(true);
+                channel.BasicPublish("", "QUEUE_NAME", properties, Encoding.UTF8.GetBytes(a));
+
+轮询
+				 var a = Newtonsoft.Json.JsonConvert.SerializeObject(msgModel); ;//这个才是具体的发送内容
+
+                var properties = channel.CreateBasicProperties();
+                properties.DeliveryMode = 2;//delivery_mode=2指明message为持久的 
+
+                 channel.BasicPublish("", "QUEUE_NAME", properties, Encoding.UTF8.GetBytes(a));
+
+
+绑定bingd
+    channel.ExchangeBind()

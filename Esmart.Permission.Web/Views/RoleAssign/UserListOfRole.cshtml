@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Esmart.Permission.Application.Models.ControlModel.DepartmentUserResponse2>
+<style>
+    #main_content_table th, #main_content_table td { text-align: center; }
+    a.tableButton:link, a.tableButton:visited, a.tableButton:hover, a.tableButton:active, a:focus { color: #337ab7; }
+    .glyphicon-remove { color: red; }
+</style>
+<div id="main_content_table_wrap">
+    <div class="mb10">
+       <label>输入任意字符搜索部门，中英文名：<input class="search" placeholder="搜索" /></label> 
+    </div>
+    <table id="main_content_table" class="table table-hover table-bordered">
+        <thead>
+            <tr role="row">
+                <th class="sorting_disabled" style="width: 100px; ">
+                    部门名称
+                </th>
+                <th class="sorting_disabled" style="width: 100px; ">
+                    真实姓名
+                </th>
+                <th class="sorting_disabled" style="width: 100px; ">
+                    英文姓名
+                </th>
+                <th class="sorting_disabled" style="width: 100px; ">
+                    性别
+                </th>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+                <th class="sorting_disabled" style="width: 100px; ">
+                    操作
+                </th>
+            </tr>
+        </thead>
+        <tbody class="list">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="DeparentName">@item.DeparentName</td>
+                    <td class="TrueName">@item.TrueName</td>
+                    <td class="Ename">@item.Ename</td>
+                    <td>@(item.Sex == 1 ? "女" : "男")</td>
+                    <td>
+                        <a title="取消用户的当前角色" class="tableButton" href="javascript:;" role="button" onclick="removeUserRole(@item.UserID,@ViewBag.roleId,'@item.TrueName')"><i class="glyphicon glyphicon-remove"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    var viewData = viewData || {};
+    if (viewData.root) {
+        $("#checkAll").attr("disabled", "disabled");
+        $("#btnSave").attr("disabled", "disabled");
+        $('#main_content_table > tbody > tr').find("td:first input").attr("disabled", "disabled");
+    }
+
+    var options = {
+        valueNames: ['DeparentName', 'TrueName', 'Ename']
+    };
+    var userList = new List('main_content_table_wrap', options);
+  
+    function checkAll(srcEle) {
+        $('#main_content_table > tbody > tr').find("td:first input").prop("checked", $(srcEle).prop("checked"));
+    }
+    function removeUserRole(userId, roleId,userName) {
+        tpo.confirm("是否确认从角色中删除用户:" + userName, function (result) {
+            if (result) {
+                main.submit("@Url.Action("RemoveUserRole")", { userId: userId, roleId: roleId }, function () {
+                    main.getHtml("@Url.Action("UserListOfRole")", { roleId: roleId }, function (html) {
+                        $("#main_content_table_wrap").html(html);
+                    });
+                });
+            }
+        });
+    }
+</script>

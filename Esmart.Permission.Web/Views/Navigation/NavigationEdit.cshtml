@@ -1,0 +1,46 @@
+﻿@model Esmart.Permission.Application.Models.ControlModel.MeunModel
+
+<form class="form-horizontal">
+    @Html.HiddenFor(p => p.AppId)
+    @Html.HiddenFor(p => p.Id)
+    @Html.HiddenFor(p => p.ParentID)
+    @Html.HiddenFor(p => p.CreateId)
+    @Html.HiddenFor(p => p.CreateTime)
+    <div class="form-group">
+        <label for="Title" class="col-md-2 control-label">标题：</label>
+        <div class="col-md-6">
+            @Html.TextBoxFor(p => p.Title, new { @class = "form-control validate[required] maxSize[30]" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Url" class="col-md-2 control-label">菜单Url</label>
+        <div class="col-md-6">
+            @Html.TextBoxFor(p => p.Url, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Iconurl" class="col-md-2 control-label">菜单图标样式</label>
+        <div class="col-md-6">
+            @Html.TextBoxFor(p => p.Iconurl, new {@class = "form-control"})
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="InClassName" class="col-md-2 control-label">进入菜单样式</label>
+        <div class="col-md-6">
+            @Html.TextBoxFor(p => p.InClassName, new {@class = "form-control"})
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="OutClassName" class="col-md-2 control-label">离开菜单样式</label>
+        <div class="col-md-6">
+            @Html.TextBoxFor(p => p.OutClassName, new {@class = "form-control"})
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="SortNo" class="col-md-2 control-label">排序</label>
+        <div class="col-md-6">
+            @Html.TextBoxFor(p => p.SortNo, new { @class = "form-control  validate[custom[number]]" })
+        </div>
+    </div>
+</form>
+

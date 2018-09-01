@@ -1,0 +1,172 @@
+﻿@using Esmart.Permission.Web.Models.Common
+<link href="~/content/ztree/bsstyle/ztreestyle.css" rel="stylesheet" />
+<style>
+    .nav > li > a { padding: 10px 15px 15px; }
+    .nav > li > a:hover, .nav > li > a:focus { text-decoration: none; background-color: #fff; }
+    .diyBtnWrap { margin-left: 16px; background-color: transparent; padding: 8px 5px 5px; text-decoration: none; }
+    .ztree li span.glyphicon { vertical-align: top; margin: -2px 3px 0; }
+    .ztree li span.glyphicon-remove { color: red; }
+</style>
+<input type="hidden" id="hidDepId" value="0" />
+<div class="container-fluid">
+    <div class="row pl10">
+        <div class="col-xs-3 panel panel-default mt15 mh700">
+            <ul id="depTreeview" class="ztree"></ul>
+        </div>
+        <div class="col-xs-9" id="mainContentPart">
+
+        </div>
+    </div>
+</div>
+<script type="text/html" id="treeHoverTempl">
+    <span class="diyBtnWrap" id="diyBtnWrap_{{tree_id}}">
+        @if (ViewBag.Permission.Contains(PermissionCons.permission_department_add))
+        {
+            <span class="button glyphicon glyphicon-plus" id="addBtn_{{tree_id}}" title="添加下级部门" onfocus="this.blur();"></span>
+        }
+        @if (ViewBag.Permission.Contains(PermissionCons.permission_department_delete))
+        {
+            <span class="button glyphicon glyphicon-remove" id="removeBtn_{{tree_id}}" title="删除所选部门" onfocus="this.blur();"></span>
+        }
+        @if (ViewBag.Permission.Contains(PermissionCons.permission_department_update))
+        {
+            <span class="button glyphicon glyphicon-pencil" id="editBtn_{{tree_id}}" title="更新部门信息" onfocus="this.blur();"></span>
+        }
+    </span>
+</script>
+<script>
+
+    var node, treeHoverHtmlRender = tpo.template("treeHoverTempl"), blRenderTreeHover = 1;
+
+    //为树形部门添加漂浮菜单
+    function addHoverDom(treeId, treeNode) {
+        if (!blRenderTreeHover) return;
+        var selNode = zTree.getSelectedNodes();
+        if (selNode.length) {
+            selNode = selNode[0];
+            removeHoverDom(selNode.tId, selNode);
+        }
+        if ($("#diyBtnWrap_" + treeNode.tId).length > 0) {
+            $("#diyBtnWrap_" + treeNode.tId).show();
+            return;
+        }
+        var treeHover = $(treeHoverHtmlRender({ tree_id: treeNode.tId }));
+        treeHover.contents()
+            .filter(function () { return this.nodeType == 3 }).remove();
+        if (blRenderTreeHover == 1) {
+            if (!treeHover.children().length) {
+                blRenderTreeHover = 0;
+                return;
+            }
+            blRenderTreeHover = 2;
+        }
+        treeHover.insertAfter($("#" + treeNode.tId + "_span"));
+        //添加部门
+        $("#addBtn_" + treeNode.tId).bind("click", function () {
+            node = treeNode;
+            main.model('@Url.Action("DepartmentEdit")?act=add&id=' + node.id, {
+                title: '为' + node.name + '添加下级部门',
+                callback: function (resp) {
+                    zTree.addNodes(node, { id: resp.DeparentId, pId: resp.ParentId, name: resp.Name });
+                }
+            });
+            return false;
+        });
+        //删除部门
+        $("#removeBtn_" + treeNode.tId).bind("click", function () {
+            node = treeNode;
+            tpo.confirm("是否确认删除" + node.name + "?",
+                function (result) {
+                    if (result) {
+                        main.submit("@Url.Action("DeleteDepartment")", { id: node.id }, function () {
+                            zTree.removeNode(node);
+                            $("#hidDepId").val("");
+                            $("#DeapartmentId").val("");
+                            $("#mainContentPart").html("<h3>请选择部门</h3>");
+                        });
+                    }
+                }
+            );
+            return false;
+        });
+        //编辑部门数据
+        $("#editBtn_" + treeNode.tId).bind("click", function () {
+            node = treeNode;
+            main.model('@Url.Action("DepartmentEdit")?act=edit&id=' + node.id, {
+                title: '更新部门信息',
+                callback: function (resp) {
+                    node.name = resp.Name;
+                    zTree.updateNode(node);
+                }
+            });
+            return false;
+        });
+        //为部门分配角色
+        $("#roleBtn_" + treeNode.tId).bind("click", function () {
+            node = treeNode;
+            main.model('@Url.Action("AssignRole")?depId=' + node.id, {
+                title: '分配部门角色',
+                initData: function (data) {
+                    var roleIds = [];
+                    $("#formAssigningRole input:checked").each(function () {
+                        roleIds.push($(this).val());
+                    });
+                    data.depId = node.id;
+                    data.roleIds = roleIds.join();
+                    return data;
+                },
+                callback: function (resp) {
+
+                }
+            });
+            return false;
+        });
+    };
+
+    //为树形部门移除漂浮菜单
+    function removeHoverDom(treeId, treeNode) {
+        $("#diyBtnWrap_" + treeNode.tId).hide();
+    };
+
+    //树形部门显示设定
+    var setting = {
+        view: {
+            dblClickExpand: true,
+            showLine: false,
+            selectedMulti: false,
+            addHoverDom: addHoverDom,
+            removeHoverDom: removeHoverDom
+        },
+        callback: {
+            onClick: function (event, treeId, treeNode) {
+                if (!treeNode.open) {
+                    zTree.expandNode(treeNode, null, null, null, true);
+                }
+                $("#hidDepId").val(treeNode.id);
+                $("#DeapartmentId").val(treeNode.id);
+                main.getHtml("@Url.Action("MainContentPart")", { departmentId: treeNode.id }, function (html) {
+                    $("#mainContentPart").html(html);
+                });
+            }
+        }
+    };
+
+    var zTree = $.fn.zTree.init($("#depTreeview"), setting, getTreeData());
+
+    var treeNode = zTree.getNodes();
+    if (treeNode.length > 0) {
+        treeNode = treeNode[0];
+        zTree.selectNode(treeNode);
+        $("#hidDepId").val(treeNode.id);
+        $("#DeapartmentId").val(treeNode.id);
+        main.getHtml("@Url.Action("MainContentPart")", { departmentId: treeNode.id }, function (html) {
+            $("#mainContentPart").html(html);
+        });
+    }
+    $(".diyBtnWrap").hide();
+    $("#depTreeview").mouseout(function () { $(".diyBtnWrap").hide(); });
+
+    function getTreeData() {
+        return  @Html.Raw(ViewBag.ZTreeNodes);
+    }
+</script>

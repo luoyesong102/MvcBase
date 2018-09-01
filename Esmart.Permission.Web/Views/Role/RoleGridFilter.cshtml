@@ -1,0 +1,23 @@
+﻿@using Esmart.Permission.Web.Models.Common
+<div class="panel">
+    @if( ViewBag.Permission.Contains( PermissionCons.common_add ) )
+    {
+        <input type="button" class="btn btn-primary" id="btn-role-add" value="新增角色"/>
+    }
+    <input type="button" class="btn btn-primary" id="btn-role-query" value="查询" />
+</div>
+
+<script type="text/javascript">
+    $("#btn-role-add").click(function () {
+        main.model('@Url.Action("AddRole", "Role")', {
+            title: '新增角色',
+            callback: function (resp) {
+
+            }
+        });
+    });
+    $("#btn-role-query").click(function () {
+        dataPage.search(1);
+    });
+</script>
+

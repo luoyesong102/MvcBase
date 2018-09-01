@@ -1,0 +1,10 @@
+﻿@model int?
+<link href="~/Content/css/style.css" rel="stylesheet" />
+
+<div class="ml10">
+    @Html.Partial("UserSearchPart")
+</div>
+
+<div class="col-lg-12 col-md-12 mt10" id="data_content_table">
+    @Html.Action("UserListPart", new { DeapartmentId = Model.Value })
+</div>

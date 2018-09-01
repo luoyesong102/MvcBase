@@ -1,0 +1,45 @@
+﻿@using Esmart.Permission.Web.MVC
+@model Esmart.Permission.Application.Models.ControlModel.RoleModel
+
+@using( Html.BeginForm("SaveRole", "Role", FormMethod.Post, new{ @class = "form-horizontal", id = "form-edit-role"} ) )
+{
+    <div>
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.CreatorId)
+        @Html.HiddenFor(m => m.CreateTime)
+    </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label" for="Name">角色名称<span class="text-danger">*</span>：</label>
+            <div class="col-xs-7">
+                @Html.TextBoxFor( m => m.Name, new { @class = "form-control w475 validate[required, maxSize[20]]" } )
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label" for="StartDate">开始有效期：</label>
+            <div class="col-xs-7">
+                @Html.DateTimePickerFor( m => m.StartDate, DateTimeCategory.Date, new { @class = "w400" } )
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label" for="EndDate">有效期截止：</label>
+            <div class="col-xs-7">
+                @Html.DateTimePickerFor( m => m.EndDate, DateTimeCategory.Date, new { @class = "w400" } )
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label" for="Remark">备注：</label>
+            <div class="col-xs-7">
+                @Html.TextAreaFor( m => m.Remark, new { @class = "form-control w475" } )
+            </div>
+        </div>
+    
+}
+
+<script type="text/javascript">
+    $("#form-edit-role").tpoAttachValidate();
+</script>
+
+
+
+
+           

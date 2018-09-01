@@ -1,0 +1,159 @@
+﻿  
+  
+  http://www.lanhusoft.com/Article/26.html  dapper
+  
+  
+  ICondition where = ConditionBulider.Acquire();
+            List<QueryParameter> param = new List<QueryParameter>();
+
+            #region 条件拼接
+
+            where.And(Field.Val("1") == Field.Val("1")).BeginAndGroup();
+            bool falg = false;
+            if (!string.IsNullOrEmpty(model.MobilePhone))
+            {
+                if (model.MobilePhone != model.MobilePhone.TrimStart('0'))
+                {
+                    falg = true;
+                    where.BeginAndGroup()
+                        .Or(Field.Val("tci.Mobile_Phone").Like(Field.Val(":mobilePhone")))
+                        .Or(Field.Val("tci.Contact_Person_Phone").Like(Field.Val(":mobilePhone")))
+                        .EndGroup();
+
+                    param.Add(new QueryParameter()
+                    {
+                        Name = "mobilePhone",
+                        Type = DbType.String,
+                        Value = string.IsNullOrEmpty(model.MobilePhone) ? "" : "%" + model.MobilePhone.TrimStart('0')
+                    });
+                }
+            }
+
+            if (!string.IsNullOrEmpty(model.ContactPersonPhone))
+            {
+                if (model.ContactPersonPhone != model.ContactPersonPhone.TrimStart('0'))
+                {
+                    falg = true;
+                    where.BeginOrGroup()
+                        .Or(Field.Val("tci.Mobile_Phone").Like(Field.Val(":contactPhone")))
+                        .Or(Field.Val("tci.Contact_Person_Phone").Like(Field.Val(":contactPhone")))
+                        .EndGroup();
+
+                    param.Add(new QueryParameter()
+                    {
+                        Name = "contactPhone",
+                        Type = DbType.String,
+                        Value =
+                            string.IsNullOrEmpty(model.ContactPersonPhone)
+                                ? ""
+                                : "%" + model.ContactPersonPhone.TrimStart('0')
+                    });
+                }
+            }
+
+            if (!string.IsNullOrEmpty(model.Qq))
+            {
+                if (model.Qq != model.Qq.TrimStart('0'))
+                {
+                    falg = true;
+                    where.BeginOrGroup()
+                        .Or(Field.Val("tci.Qq").Like(Field.Val(":qq")))
+                        .Or(Field.Val("tci.Contact_QQ").Like(Field.Val(":qq")))
+                        .EndGroup();
+
+                    param.Add(new QueryParameter()
+                    {
+                        Name = "qq",
+                        Type = DbType.String,
+                        Value = string.IsNullOrEmpty(model.Qq) ? "" : "%" + model.Qq.TrimStart('0')
+                    });
+                }
+            }
+
+            if (!string.IsNullOrEmpty(model.ContactQq))
+            {
+                if (model.ContactQq != model.ContactQq.TrimStart('0'))
+                {
+                    falg = true;
+                    where.BeginOrGroup()
+                        .Or(Field.Val("tci.Qq").Like(Field.Val(":contactqq")))
+                        .Or(Field.Val("tci.Contact_QQ").Like(Field.Val(":contactqq")))
+                        .EndGroup();
+                    param.Add(new QueryParameter()
+                    {
+                        Name = "contactqq",
+                        Type = DbType.String,
+                        Value = string.IsNullOrEmpty(model.ContactQq) ? "" : "%" + model.ContactQq.TrimStart('0')
+                    });
+                }
+            }
+            if (!falg)
+                where.And(Field.Val("1") != Field.Val("1"));
+            where.EndGroup();
+            param.Add(new QueryParameter()
+            {
+                Name = "@where",
+                Value = where.ToString()
+            });
+
+            #endregion
+
+            var data = SqlExecuteHelper.ExcuteXmlSQLFor<CheckPhoneAndQq>("Customer", "CheckPhoneAndQQ", param.ToArray());
+
+
+
+<Sqls>
+			 <!--推荐复购电话号码查询时去首0匹配-->
+  <Sql Name="CheckPhoneAndQQ" Type="SQL" WithTrascation="false">
+    <SqlString>
+      <![CDATA[
+SELECT  tsu.True_Name ,
+        tsu.Ename ,
+        tcpi.Clue_guid ,
+        tci.Customer_Name ,
+        tci.Contact_Person ,
+        tci.Mobile_Phone ,
+        tci.Contact_Person_Phone ,
+        tci.Qq ,
+        tci.Contact_QQ ,
+        tsi.student_guid,
+        tcpi.status
+FROM    dbo.Tpo_Customer_Info tci
+        LEFT JOIN dbo.Tpo_student_info tsi ON tci.customer_guid = tsi.Clue_guid
+        LEFT JOIN dbo.Tpo_CluePre_Info tcpi ON tsi.Clue_guid = tcpi.Clue_guid
+        LEFT JOIN dbo.Tpo_Sys_Users tsu ON tcpi.personid = tsu.User_Id
+  where tcpi.status=12 and  @where
+      ]]>
+    </SqlString>
+    <Params>
+      <Item DataType="String" Name="Clue_guid"/>
+    </Params>
+  </Sql>
+  <!---->
+</Sqls>
+
+
+
+
+
+
+
+
+ QueryParameter[] CluePrePara = new QueryParameter[]{
+                                                             new QueryParameter { Name = "grade", Type = DbType.String, Value =model.grade},
+                                                             new QueryParameter { Name = "base_ability", Type = DbType.String, Value =model.base_ability},
+                                                             new QueryParameter { Name = "target_score", Type = DbType.String, Value =model.target_score},
+                                                             new QueryParameter { Name = "Presell_ExamDate", Type = DbType.String, Value =model.Presell_ExamDate},
+                                                             new QueryParameter { Name = "remarks", Type = DbType.String, Value =model.remarks},
+                                                             new QueryParameter { Name = "keycontent", Type = DbType.String, Value =model.keycontent},
+                                                             new QueryParameter { Name = "business_type", Type = DbType.String, Value =model.BusinessType},
+                                                             new QueryParameter { Name = "Presell_AskDate", Type = DbType.String, Value =model.PresellAskDate},
+                                                             new QueryParameter { Name = "Clue_ID", Type = DbType.String, Value =model.Customer_guid},
+                                                               new QueryParameter { Name = "PRESELL_TAG", Type = DbType.String, Value =model.CustomerLabel},
+                                                             new QueryParameter { Name = "source", Type = DbType.Int32, Value =model.ClueSourceValue1}
+            };
+
+             
+
+                
+                    SqlExecuteHelper.ExecuteNonQuery("communRecord", "updateTpo_CluePre_InfoTable", CluePrePara);

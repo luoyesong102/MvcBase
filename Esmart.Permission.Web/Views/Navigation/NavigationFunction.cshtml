@@ -1,0 +1,14 @@
+﻿@model List<Esmart.Permission.Application.Models.ControlModel.FunctionResponse>
+<style>
+    .itemwidth { width: 200px; }
+</style>
+<form class="form-horizontal">
+    @foreach (var item in @Model)
+    {
+        <div class="form-group col-md-2 itemwidth">
+            <label class="control-label">
+                <input type="checkbox" name="ListFunctionId" value="@item.Id" @(item.IsChoice ? "checked" : "") />&nbsp;@item.Name
+            </label>
+        </div>
+    }
+</form>

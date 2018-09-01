@@ -1,0 +1,58 @@
+﻿@using Esmart.Permission.Web.Models.Common
+
+
+<div class="col-lg-12 col-md-12 nav-inquire-addto margin-top-10">
+    <div class="row">
+        <div class="col-lg-9 col-md-9" style="padding-left:0px">
+            <div class="col-lg-1 col-md-1 no-padding" style="width: 80px;">
+                <button id="btnFunctionAdd" class="btn btn-add center-block"><span class="glyphicon glyphicon-plus text-center"></span> 添加</button>
+            </div>
+            <div class="col-lg-3 col-md-3 no-padding-left" style="width: 260px;">
+                <div class="form-group">
+                    <label for="AppId" class="col-lg-3 col-md-4 control-label no-padding text-center AppId-line-height">AppId：</label>
+                    <div class="col-lg-9 col-md-8 no-padding">
+                        @Html.DropDownList("AppId", (IEnumerable<SelectListItem>)@ViewBag.AppList, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-1 col-md-1" style="width: 100px;">
+                <button id="btnSearch" class="btn btn-inquire">查询</button>
+            </div>
+            <div class="col-lg-1 col-md-1" style="width: 100px;">
+                
+                <button id="checkbox_btn" class="btn btn-inquire">选择列表列</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <input type="hidden" name="HiddenFieldNum" id="HiddenFieldNum" value="3" />
+        <table width="100%" id="checkRows" class="table table-bordered" style="margin-top: 20px;">
+            <tr><td><input type='checkbox' id='rowsBox0' class='rows-box' value='0' />功能KEY</td><td><input type='checkbox' id='rowsBox1' class='rows-box' value='1' />功能名字</td><td><input type='checkbox' id='rowsBox2' class='rows-box' value='2' />备注</td><td><input type='checkbox' id='rowsBox3' class='rows-box' value='3' />操作</td></tr>
+        </table>
+    </div>
+    </div>
+
+<script>
+    $(function () {
+        $("#btnSearch").click(function () {
+            dataPage.search(1);
+          
+        });
+
+        $("#btnFunctionAdd").click(function () {
+            var param = $("#AppId").val();
+            main.model('/Function/FunctionAdd?AppId=' + param, { title: '添加功能' });
+        });
+
+       
+        $("#checkbox_btn").click(function () {
+            if ($("#checkRows").css("display") == "table") {
+                $("#checkRows").css("display", "none");
+            }
+            else {
+                $("#checkRows").css("display", "table");
+            }
+        })        
+
+    });
+</script>

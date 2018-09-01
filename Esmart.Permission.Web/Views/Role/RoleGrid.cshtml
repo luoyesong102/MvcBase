@@ -1,0 +1,132 @@
+﻿@using Esmart.Permission.Web.Models.Common
+@model Esmart.Framework.Model.SoaDataPageResponse<Esmart.Permission.Application.Models.ControlModel.RoleModel>
+<style>
+    #main_content_table th { text-align: center; }
+</style>
+<table id="main_content_table" class="table table-hover table-bordered">
+    <thead>
+        <tr role="row">
+            <th class="sorting_disabled" style="width: 100px; border-bottom-color: rgb(221, 221, 221);">角色名</th>
+            <th class="sorting_disabled" style="width: 100px; border-bottom-color: rgb(221, 221, 221);">开始有效期</th>
+            <th class="sorting_disabled" style="width: 100px; border-bottom-color: rgb(221, 221, 221);">有效期截至</th>
+            <th class="sorting_disabled" style="width: 100px; border-bottom-color: rgb(221, 221, 221);">备注</th>
+            <th class="sorting_disabled" style="width: 160px; border-bottom-color: rgb(221, 221, 221);">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Body)
+        {
+            <tr>
+                <td style="text-align: center;">
+                    <a class="role-assign" role="button" onclick="showUsersOfRole(@item.Id, '@item.Name')">@item.Name</a>
+                </td>
+                <td style="text-align: center;">@(item.StartDate == null ? "--" : item.StartDate.Value.ToString("yyyy-MM-dd"))</td>
+                <td style="text-align: center;">@(item.EndDate == null ? "--" : item.EndDate.Value.ToString("yyyy-MM-dd"))</td>
+                <td style="text-align: center;">@item.Remark</td>
+                <td style="text-align: center;">
+                    @if (ViewBag.Permission.Contains(PermissionCons.common_update))
+                    {
+                        if (item.IsBuiltin)
+                        {
+                            <a class="disabled" title="系统角色不允许修改">
+                                <i class="glyphicon glyphicon-pencil"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="role-edit" data-param="8" role="button" title="编辑" onclick="RoleManager.EditRole(@item.Id)">
+                                <i class="glyphicon glyphicon-pencil"></i>
+                            </a>
+                        }
+                        <span>&nbsp; &nbsp;</span>
+                    }
+                    @if (ViewBag.Permission.Contains(PermissionCons.common_delete))
+                    {
+                        if (item.IsBuiltin)
+                        {
+                            <a class="disabled" title="系统角色不允许删除">
+                                <i class="glyphicon glyphicon-remove"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="role-delete" data-param="8" role="button" title="删除" onclick="RoleManager.DeleteRole(@item.Id)" style="color:red;">
+                                <i class="glyphicon glyphicon-remove"></i>
+                            </a>
+                        }
+                        <span>&nbsp; &nbsp;</span>
+                    }
+                    @if (ViewBag.Permission.Contains(PermissionCons.permission_role_assign))
+                    {
+                        <a class="role-assign" data-param="8" role="button" title="分配权限" onclick="RoleManager.EditRolePermissions(@item.Id,'@item.Name')">
+                            <i class="glyphicon glyphicon-tasks"></i>
+                        </a><span>&nbsp; &nbsp;</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script type="text/javascript">
+
+    var RoleManager = {};
+
+    dataPage.count=@Model.Count;
+
+    RoleManager.EditRole = function (id) {
+        main.model('@Url.Action("EditRole", "Role")?roleId=' + id, { title: '编辑角色' });
+    };
+
+    RoleManager.EditRolePermissions = function (id,title) {
+        main.model('@Url.Action( "EditRolePermission", "Role" )?roleId=' + id, {
+            title: title + ' -- 角色权限分配',
+            initData: function (data) {
+                var appId = $(".active[role='tabpanel']").attr("id");
+                data.AppId = appId;
+                data.RoleId = id;
+
+                var activeTreeId = appId + "-tree";
+                var pTree = $.fn.zTree.getZTreeObj(activeTreeId);
+                var checkedNodes = pTree.getCheckedNodes(true);
+                var i = 0;
+                var j = 0;
+                for (var key in checkedNodes) {
+                    var node = checkedNodes[key];
+                    if (node.category === 0) {
+                        var menuParaName = "NavigationsCollection[" + i + "]";
+                        data[menuParaName] = Number(node.id);
+                        i++;
+                    } else {
+                        var funKeyName = "FunctionsCollection[" + j + "].Key";
+                        var funValueName = "FunctionsCollection[" + j + "].Value";
+                        var funId = node.id.split('-');
+
+                        data[funKeyName] = Number(funId[0]);
+                        data[funValueName] = Number(funId[1]);
+
+                        j++;
+                    }
+                }
+                return data;
+            }
+        });
+    };
+
+    RoleManager.DeleteRole = function (id) {
+        tpo.confirm(
+            "是否确认删除?",
+             function (confirm) {
+                 if (confirm) {
+                     main.submit('@Url.Action("DeleteRole", "Role")', { roleId: id }, function () {
+                         dataPage.remove(1);
+                     });
+                 }
+             });
+    };
+    function showUsersOfRole(roleId, roleName) {
+        main.model('@Url.Action("UserListOfRole","RoleAssign")?roleId=' + roleId, {
+            title: '查看角色[' + roleName + ']关联的用户',  buttons: ["close"]
+        });
+    }
+</script>

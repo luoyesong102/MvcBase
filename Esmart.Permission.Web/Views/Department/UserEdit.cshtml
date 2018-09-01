@@ -1,0 +1,118 @@
+﻿@using Esmart.Permission.Web.MVC
+@model Esmart.Permission.Web.Models.Permissions.UserEditViewModel
+
+@using (Html.BeginForm("SaveUser", "Department", FormMethod.Post, new { @class = "form-horizontal", id = "UserEditForm" }))
+{
+    @Html.HiddenFor(n => n.UserID)
+    @Html.HiddenFor(n => n.DepartmentId)
+    <div>
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs">
+            <li><a href="#" class="disabled">&nbsp;&nbsp;</a></li>
+            <li class="active">
+                <a href="#user_basic_info" data-toggle="tab">基本信息</a>
+            </li>
+            <li>
+                <a href="#user_contact_info" data-toggle="tab">联系信息</a>
+            </li>
+            <li>
+                <a href="#user_other_info" data-toggle="tab">用户备注</a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content mt20">
+            <!--基本信息-->
+            <div role="tabpanel" class="tab-pane active" id="user_basic_info">
+                <div class="form-group">
+                    <label class="col-xs-2 control-label"><span class="text-danger">*</span>工号</label>
+                    <div class="col-xs-7">
+                        @Html.TextBoxFor(n => n.WorkNo, new { @class = "form-control  validate[required,custom[onlyNumber],maxSize[50]]", maxlength = "50" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label"><span class="text-danger">*</span>电子邮箱</label>
+                    <div class="col-xs-7">
+                        @Html.TextBoxFor(n => n.Email, new { @class = "form-control  validate[required,custom[email]],maxSize[50]]", maxlength = "50" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label"><span class="text-danger">*</span>手机号码</label>
+                    <div class="col-xs-7">
+                        @Html.TextBoxFor(n => n.Mobile, new { @class = "form-control  validate[required,funcCall[validatePhonenumber]]", maxlength = "20" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label"><span class="text-danger">*</span>真实姓名</label>
+                    <div class="col-xs-7">
+                        @Html.TextBoxFor(n => n.TrueName, new { @class = "form-control  validate[required,maxSize[50]]", maxlength = "50" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">英文名</label>
+                    <div class="col-xs-7">
+                        @Html.TextBoxFor(n => n.Ename, new { @class = "form-control  validate[custom[ename],maxSize[50]]", maxlength = "50" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">出生日期</label>
+                    <div class="col-xs-7">
+                        @Html.DateTimePickerFor(m => m.Birthday, DateTimeCategory.Date, new CustomizeDateTimePicker(null, null, true), new { @class = "" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">性别</label>
+                    <div class="col-xs-7">
+                        <label class="radio-inline">@Html.RadioButtonFor(n => n.Sex,0) &nbsp;男</label>
+                        <label class="radio-inline">@Html.RadioButtonFor(n => n.Sex, 1) &nbsp;女</label>
+                    </div>
+                </div>
+            </div>
+            <!--联系信息-->
+            <div role="tabpanel" class="tab-pane" id="user_contact_info">
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">QQ号码</label>
+                    <div class="col-xs-7">
+                        @Html.TextBoxFor(n => n.qq, new { @class = "form-control validate[custom[number],maxSize[50]]", maxlength = "50" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">Skype</label>
+                    <div class="col-xs-7">
+                        @Html.TextBoxFor(n => n.Skype, new { @class = "form-control validate[custom[number],maxSize[50]]", maxlength = "50" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">家庭电话</label>
+                    <div class="col-xs-7">
+                        @Html.TextBoxFor(n => n.HomeTel, new { @class = "form-control validate[custom[phone],maxSize[20]]", maxlength = "20" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">家庭住址</label>
+                    <div class="col-xs-7">
+                        @Html.TextAreaFor(n => n.HomeAddr, new { @class = "form-control validate[maxSize[200]]", rows = 4, maxlength = "200" })
+                    </div>
+                </div>
+            </div>
+            <!--备注信息-->
+            <div role="tabpanel" class="tab-pane" id="user_other_info">
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">用户备注</label>
+                    <div class="col-xs-7">
+                        @Html.TextAreaFor(n => n.Remark, new { @class = "form-control validate[maxSize[200]]", rows = 4, maxlength = "200" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    function validatePhonenumber() {
+        if (!/^1\d{10}$/.test($("#Mobile").val()))
+            return "手机号码无效";
+    }
+    $("#UserEditForm").tpoAttachValidateWithTabs();
+</script>

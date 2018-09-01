@@ -1,0 +1,66 @@
+﻿@using Esmart.Permission.Web.Models.Common
+<link href="~/content/ztree/bsstyle/ztreestyle.css" rel="stylesheet" />
+<style>
+    .ztree li span.button.user_ico_docu { margin-right: 2px; content: "\e008"; vertical-align: top; *vertical-align: middle; }
+    .ztree li span.button.user_ico_docu:before { content: "\e008"; }
+</style>
+<div class="container-fluid">
+    <div class="row pl10">
+        <div class="col-xs-3 panel panel-default mt15" style="height:700px;overflow-y:auto;">
+            <ul id="depTreeview" class="ztree"></ul>
+        </div>
+        <div class="col-xs-9" id="mainContentPart">
+
+        </div>
+    </div>
+</div>
+<script>
+
+    var viewData = {};
+
+    //树形部门显示设定
+    var setting = {
+        view: {
+            dblClickExpand: true,
+            showLine: false,
+            selectedMulti: false
+        },
+        callback: {
+            onClick: function (event, treeId, treeNode) {
+                loadTableView(treeNode);
+            }
+        }
+    };
+
+    var zTree = $.fn.zTree.init($("#depTreeview"), setting, getTreeData());
+
+    var treeNode = zTree.getNodes();
+    if (treeNode.length > 0) {
+        treeNode = treeNode[0];
+        zTree.selectNode(treeNode);
+        loadTableView(treeNode);
+    }
+
+    function loadTableView(treeNode) {
+        if (viewData.id == treeNode.id) {
+            return;
+        }
+        viewData.id = treeNode.id;
+        if (treeNode.type === "User") {
+            viewData.departmentId = 0;
+            viewData.userId = treeNode.id;
+        }
+        else {
+            viewData.userId = 0;
+            viewData.departmentId = treeNode.id;
+        }
+        viewData.root = treeNode.type === "Root";
+        main.getHtml("@Url.Action("MainContentPart")", viewData, function (html) {
+            $("#mainContentPart").html(html);
+        });
+    }
+
+    function getTreeData() {
+        return  @Html.Raw(ViewBag.ZTreeNodes);
+    }
+</script>

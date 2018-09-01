@@ -1,0 +1,92 @@
+﻿@model Esmart.Permission.Web.Models.Permissions.RolePermissionsViewModel
+
+@using( Html.BeginForm( "SaveRolePermission", "Role", FormMethod.Post ) )
+{
+    @Html.HiddenFor( m=>m.RoleId)
+    <div>
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs app-tab">
+            @foreach( var app in Model.Apps )
+            {
+                <li role="presentation">
+                    <a href="#@app.AppId" data-toggle="tab" data-param="@app.AppId">@app.AppName</a>
+                </li>
+            }
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content mt20 app-tab-content">
+            @foreach( var app in Model.Apps )
+            {
+                <div role="tabpanel" class="tab-pane" id="@app.AppId">
+                    <div class="form-group">
+                         <ul id="@string.Format("{0}-tree", app.AppId)" class="ztree"></ul>
+                    </div>
+                </div>
+            }            
+        </div>
+    </div>  
+}
+<link href="~/content/ztree/bsstyle/ztreestyle.css" rel="stylesheet" />
+<script type="text/javascript">
+    var PermissionManager = {};
+
+    PermissionManager.expandTreeNode = function(e, treeId, treeNode) {
+        var pTree = $.fn.zTree.getZTreeObj(treeId);
+        pTree.expandNode(treeNode, !treeNode.open, false, true, false);
+    };
+
+    PermissionManager.setting = {
+        view: {
+            showLine: false
+        },
+        data: {
+            simpleData: {
+                enable: true,
+                idKey: "id",
+                pIdKey: "pId",
+                rootPId: 0
+            }
+        },
+        check: {
+            enable: true,
+            chkboxType: { "Y": "p", "N": "ps" }
+        },
+        callback: {
+            onClick: function (e, treeId, treeNode) {
+                var zTree = $.fn.zTree.getZTreeObj(treeId);
+                if (!treeNode.checked) {
+                    treeNode.getParentNode().checked = true;
+                } else {
+                    var checkNodes = ztree.transformToArray(treeNode);
+                    if (checkNodes && checkNodes.length == 0) {
+                        treeNode.getParentNode().checked = false;
+                    }
+                }
+                zTree.checkNode(treeNode, null, false, false);
+            }
+        }
+    };
+
+    PermissionManager.initTree = function(rid, aid) {
+        var targetTree = $("#" + aid + "-tree");
+        //if (targetTree[0].children.length === 0) {
+            $.get('@Url.Action("GetRolePermissionTreeJson", "Role")?Token=' + pageGlobalToken, {
+                roleId: rid,
+                appId: aid
+            }, function(data) {
+                var json = JSON.parse(data);
+                $.fn.zTree.init(targetTree, PermissionManager.setting, json);
+            });
+        //}
+    };
+
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        var appId = $(this).attr("data-param");
+        var roleId = $("#RoleId").val();
+        PermissionManager.initTree(roleId, appId);
+    });
+
+    $('.app-tab a:first').tab('show');
+
+   
+</script>

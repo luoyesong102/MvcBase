@@ -1,0 +1,41 @@
+﻿<form class="form-horizontal">
+    <input type="hidden" value="@ViewBag.ParentNavigationId" id="ParentID" name="ParentID" />
+    <input type="hidden" value="@ViewBag.AppId" id="AppId" name="AppId" />
+
+    <div class="form-group">
+        <label for="Title" class="col-md-2 control-label">标题：</label>
+        <div class="col-md-6">
+            @Html.TextBox("Title", null, new { @class = "form-control validate[required] maxSize[30]" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Url" class="col-md-2 control-label">菜单Url</label>
+        <div class="col-md-6">
+            @Html.TextBox("Url", null, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Iconurl" class="col-md-2 control-label">菜单图标样式</label>
+        <div class="col-md-6">
+            @Html.TextBox("Iconurl", null, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="InClassName" class="col-md-2 control-label">进入菜单样式</label>
+        <div class="col-md-6">
+            @Html.TextBox("InClassName", null, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="OutClassName" class="col-md-2 control-label">离开菜单样式</label>
+        <div class="col-md-6">
+            @Html.TextBox("OutClassName", null, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="SortNo" class="col-md-2 control-label">排序</label>
+        <div class="col-md-6">
+            @Html.TextBox("SortNo", null, new { @class = "form-control  validate[custom[number]]" })
+        </div>
+    </div>
+</form>

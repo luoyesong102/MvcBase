@@ -1,0 +1,7 @@
+﻿<div class="ml10">
+    @Html.Partial("SearchPart")
+</div>
+
+<div class="col-lg-12 col-md-12 mt10" id="data_content_table">
+    @Html.Action("TablePart", new { departmentId = ViewBag.departmentId, userId = ViewBag.userId })
+</div>

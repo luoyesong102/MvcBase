@@ -1,0 +1,129 @@
+﻿@{ Layout = null;}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>平台权限管理系统 - 用户登录</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="renderer" content="webkit">
+    <script>
+
+        if (!window.applicationCache) {
+            window.location = "/IE_Warning.html";
+        }
+        if (!window.sessionStorage) {
+            window.location = "/IE_Warning.html";
+        }
+        if (!window.localStorage) {
+            window.location = "/IE_Warning.html";
+        }
+
+    </script>
+
+    <link href="~/Content/img/favicon.ico" rel="shortcut icon" media="screen" />
+   
+    <link href="~/content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+
+    <script src="~/scripts/jquery-2.1.4.min.js"></script>
+    <script src="~/Scripts/bootstrap-notify.min.js"></script>
+</head>
+<body class="erp-login-bj">
+    <div class="erp-login-head-Response clearfix">
+        <div class="erp-login-center-Response">
+            <h1>
+                <img src="/Content/img/erp-logo.png">
+                欢迎使用基础平台管理系统
+            </h1>
+        </div>
+    </div>
+    <div class="erp-login-cont-Response clearfix">
+        <div class="pull-left erp-response-imgtp">
+            <img src="/Content/img/erp-logo-tp.jpg">
+        </div>
+        <div class="pull-left login-right">
+            <h2>账号登陆</h2>
+            <form method="post">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                        <input type="text" name="UserName" class="form-control"  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="手机号/邮箱">
+                       @if (!string.IsNullOrEmpty(ViewBag.ErrorMsg))
+                       {
+                        <span class="absolute-span-Prompt-Response glyphicon glyphicon-exclamation-sign"></span>
+                       }
+                    </div>
+                    @if (!string.IsNullOrEmpty(ViewBag.ErrorMsg))
+                    {
+                        <p class="absolute-p-prompt-response" style="color:red">@ViewBag.ErrorMsg</p>
+                       
+                    }
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                        <input type="password" name="Password" class="form-control" autocomplete="off" placeholder="密码">
+                        <p class="absolute-p-Prompt hide">请输入正确的密码</p>
+                        <span class="absolute-span-Prompt glyphicon glyphicon-exclamation-sign hide"></span>
+                    </div>
+                </div>
+                <div class="form-group clearfix form-group-checkbox">
+                    <div class="checkbox pull-checkbox-left">
+                        <label>
+
+                            <input type="checkbox" id="remember" name="remember" checked="checked"> 记住用户名
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group form-group-submit-Response">
+                    <button type="submit" class="btn">立即登录</button>
+                </div>
+            </form>
+
+        
+        </div>
+    </div>
+    <script type="text/javascript">
+
+    $(function () {
+        (function ($) {
+            var userName = window.localStorage.userName;
+            var remember = document.getElementById("remember");
+            if (remember) {
+                $("input[name='UserName']").val(userName);
+            }
+            $("button[type='submit']").click(function () {
+                if (remember.checked) {
+                    window.localStorage.userName = $("input[name='UserName']").val();
+                }
+                else {
+                    window.localStorage.userName = "";
+                }
+                window.sessionStorage.href = "";
+            });
+        })(jQuery);
+    })
+
+    $.notify({
+        // options
+        icon: 'glyphicon glyphicon-warning-sign',
+        message: '浏览器要求,chrome37以上,360浏览器请使用极速模式,IE请用10以上版本,Firefox37以上,<br/>用户登录不上，请联系管理员重置密码<br/><br/>',
+        target: '_blank'
+    }, {
+      
+        type: "success",
+        delay:30000,
+        placement: {
+            from: 'bottom',
+            align: 'right'
+        }
+      
+    });
+     </script>
+
+
+
+</body>
+</html>

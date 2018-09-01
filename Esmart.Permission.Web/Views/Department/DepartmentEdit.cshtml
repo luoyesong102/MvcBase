@@ -1,0 +1,22 @@
+﻿@model Esmart.Permission.Application.Models.ControlModel.DepartmentResponse
+<div class="mt20"></div>
+@using (Html.BeginForm("SaveDepartment", "Department", FormMethod.Post, new { @class = "form-horizontal", id = "DepartmentForm" }))
+{
+    @Html.HiddenFor(n => n.DeparentId)
+    @Html.HiddenFor(n => n.ParentId)
+    <div class="form-group">
+        <label class="col-xs-2 control-label"><span class="text-danger">*</span>部门名称</label>
+        <div class="col-xs-7">
+            @Html.TextBoxFor(n => n.Name, new { @class = "form-control validate[required,maxSize[50]]" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label">部门备注</label>
+        <div class="col-xs-7">
+            @Html.TextAreaFor(n => n.Remark, new { @class = "form-control validate[maxSize[200]]", rows = "4" })
+        </div>
+    </div>
+}
+<script>
+    $("#DepartmentForm").tpoDisableEnterSubmit();
+</script>

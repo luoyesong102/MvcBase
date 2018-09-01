@@ -1,0 +1,20 @@
+﻿@using Esmart.Permission.Web.Models.Common
+@model IEnumerable<SelectListItem>
+<link href="~/content/css/magicsuggest-min.css" rel="stylesheet" />
+<form action="@Url.Action("AddExistingUser")" method="POST" style="min-height: 340px; ">
+    <div class="text-danger p5">注意：用户调入本部门后，将与原部门解除从属关系</div>
+    @if (Model.Any())
+    {
+        @Html.Partial("MagicSuggest", new MagicSuggest
+        {
+            ControlId = "users",
+            Name = "user_ids",
+            PlaceHolder = "选择用户",
+            Data = Model
+        })
+    }
+    else
+    {
+        <h3>没有可调入的用户</h3>
+    }
+</form>

@@ -1,0 +1,161 @@
+﻿@using Esmart.Permission.Web.Models.Common
+<link href="~/Content/zTree/NavStyle/zTreeStyle.css" rel="stylesheet" />
+<style>
+    .nav > li > a { padding: 10px 15px 15px; }
+    .nav > li > a:hover, .nav > li > a:focus { text-decoration: none; background-color: #fff; }
+    .diyBtnWrap { margin-left: 16px; background-color: #fff; padding: 8px 5px 5px; }
+    .ztree li span.glyphicon { vertical-align: top; margin: -5px 3px 0; }
+    .ztree li span.glyphicon-remove { color: red; }
+</style>
+<div class="col-lg-12 col-md-12 nav-inquire-addto margin-top-10">
+    <div class="row">
+        <div class="col-lg-9 col-md-9">
+            <div class="col-lg-1 col-md-1 no-padding" style="width: 80px;">
+                <button class="btn btn-add" id="btnNavigationAdd"><span class="glyphicon glyphicon-plus text-center"></span> 添加</button>
+            </div>
+            <div class="col-lg-3 col-md-3 no-padding-left" style="width: 260px;">
+                <div class="form-group">
+                    <label for="AppId" class="col-lg-3 col-md-4 control-label no-padding text-center AppId-line-height">AppId：</label>
+                    <div class="col-lg-9 col-md-8 no-padding">
+                        @Html.DropDownList("AppId", (IEnumerable<SelectListItem>)@ViewBag.AppList, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-1 col-md-1" style="width: 100px;">
+                <button Id="btnSearch" class="btn btn-inquire">查询</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-3" style="background-color: #f6f6f6">
+                    <div id="treeview" class="ztree" style="max-height: 800px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/scripts/ztree/jquery.ztree.all-3.5.min.js"></script>
+<script>
+
+    var setting = {
+        view: {
+            dblClickExpand: true,
+            showLine: false,
+            selectedMulti: false,
+            addHoverDom: addHoverDom,
+            removeHoverDom: removeHoverDom
+        },
+        callback: {
+            onClick: function (event, treeId, treeNode) {
+            }
+        }
+    };
+
+    var newCount = 1, node;
+
+    function addHoverDom(treeId, treeNode) {
+
+        var selNode = zTree.getSelectedNodes();
+        if (selNode.length) {
+            selNode = selNode[0];
+            removeHoverDom(selNode.tId, selNode);
+        }
+        if ($("#diyBtnWrap_" + treeNode.tId).length > 0) {
+            $("#diyBtnWrap_" + treeNode.tId).show();
+            return;
+        }
+        var sObj = $("#" + treeNode.tId + "_span");
+        var addStr = "<span class='diyBtnWrap' id='diyBtnWrap_" + treeNode.tId + "'>";
+        addStr += "<span class='button glyphicon glyphicon-plus' id='addBtn_" + treeNode.tId + "' title='添加菜单' onfocus='this.blur();'></span>";
+        addStr += "<span class='button glyphicon glyphicon-remove' id='removeBtn_" + treeNode.tId + "' title='删除菜单' onfocus='this.blur();'></span>";
+        addStr += "<span class='button glyphicon glyphicon-pencil' id='editBtn_" + treeNode.tId + "' title='修改菜单' onfocus='this.blur();'></span>";
+        addStr += "<span class='button glyphicon glyphicon-equalizer' id='allocationBtn_" + treeNode.tId + "' title='分配功能' onfocus='this.blur();'></span>";
+        addStr += "</span>";
+        sObj.after(addStr);
+        $("#addBtn_" + treeNode.tId).bind("click", function () {
+            node = treeNode;
+            main.model('@Url.Action("NavigationAdd")?parentNavigationId=' + treeNode.id + "&appId=" + $("#AppId").val(), {
+                title: '添加菜单',
+                callback: function (resp) {
+                    newCount++;
+                    zTree.addNodes(node, { id: resp.Id, pId: node.id, name: resp.Title });
+                }
+            });
+            return false;
+        });
+
+        $("#removeBtn_" + treeNode.tId).bind("click", function () {
+            node = treeNode;
+            tpo.confirm("是否确认删除" + node.name + "?",
+                function (result) {
+                    if (result) {
+                        zTree.removeNode(node);
+                        main.submit('@Url.Action("NavigationDelete")', { navigationId: treeNode.id }, function() {});
+                    }
+                });
+            return false;
+        });
+        $("#editBtn_" + treeNode.tId).bind("click", function () {
+            node = treeNode;
+            main.model('@Url.Action("NavigationEdit")?navigationId=' + node.id, {
+                title: '修改菜单',
+                callback: function (resp) {
+                    node.name = resp.Title;
+                    zTree.updateNode(node);
+                }
+            });
+            return false;
+        });
+        $("#allocationBtn_" + treeNode.tId).bind("click", function () {
+            main.model('@Url.Action("NavigationFunction")?appId=' + $("#AppId").val() + '&navigationId=' + treeNode.id, {
+                title: '分配功能',
+                //initModel: function (data) {
+                //    return { FunctionKey: data.FunctionKey };
+                //},
+                callback: function (resp) {
+                    //node.name = resp.Name;
+                    //zTree.updateNode(node);
+                }
+            });
+            return false;
+        });
+    };
+
+    function removeHoverDom(treeId, treeNode) {
+        $("#diyBtnWrap_" + treeNode.tId).hide();
+    };
+
+    var zTree;
+    $(function () {
+        $("#btnNavigationAdd").click(function () {
+            main.model('@Url.Action("NavigationAdd")?appId=' + $("#AppId").val(),
+            {
+                title: '添加菜单',
+                callback: function (response) {
+                    location.reload();//.href ='@Url.Action("NavigationManager")?appId=' +$("#AppId").val()//
+                }
+            });
+        });
+
+        main.getData('@Url.Action("NavigationTree")', { AppId: $("#AppId").val() }, function (data) {
+            if (data.length > 0)
+                data[0].open = true;
+            zTree = $.fn.zTree.init($("#treeview"), setting, data);
+        });
+
+        $("#btnSearch").click(function() {
+            main.getData('@Url.Action("NavigationTree")', { AppId: $("#AppId").val() }, function (data) {
+                if (data.length > 0)
+                    data[0].open = true;
+                zTree = $.fn.zTree.init($("#treeview"), setting, data);
+            });
+        });
+
+
+    });
+
+
+</script>

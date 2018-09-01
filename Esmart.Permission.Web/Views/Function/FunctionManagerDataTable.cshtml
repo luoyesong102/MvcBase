@@ -1,0 +1,92 @@
+﻿@using Esmart.Permission.Web.Models.Common
+@model IEnumerable<Esmart.Permission.Application.Models.ControlModel.FunctionModel>
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th class='rows-index-0'>功能key</th>
+            <th class='rows-index-1'>功能名字</th>
+            <th class='rows-index-2'>备注</th>
+            <th class='rows-index-3'>操作</th>
+        </tr>
+    </thead>
+    <tbody id="body-colum">
+        @foreach (var fun in Model)
+        {
+            <tr>
+                <td>@fun.FunctionKey</td>
+                <td>@fun.FunctionName</td>
+                <td>@fun.Remark</td>
+                <td>
+                    <a class="FunctionEdit" data-param="@fun.FunctionId" role="button" title="更新">
+                        <i class="glyphicon glyphicon-pencil"></i>
+                    </a>
+                    &nbsp;&nbsp;
+                    <a class="FunctionDelete" data-param="@fun.FunctionId" role="button" title="删除">
+                        <i class="glyphicon glyphicon-remove" style="color: red"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+<script>
+
+    dataPage.count = @ViewBag.Count;
+
+    $(".FunctionEdit").click(function () {
+        var param = $(this).attr("data-param");
+        main.model('@Url.Action("FunctionEdit", "Function")?functionId=' + param, { title: '更新功能' });
+    });
+
+    $(".FunctionDelete").click(function () {
+        var param = $(this).attr("data-param");
+        DeleteFunction(param);
+    });
+
+    function DeleteFunction(functionId) {
+        tpo.confirm("是否确认删除?",
+            function (result) {
+                if (result) {
+                    main.submit("/Function/FunctionDelete", { functionId: functionId }, function (data) {
+                        dataPage.remove(1);
+                    });
+                }});
+    }
+    $(function () {
+        $("#body-colum").find("tr").each(function (index, element) {
+            $(element).addClass("colum-" + index);
+
+            $(".colum-" + index).find("td").each(function (index, element) {
+                $(element).addClass("colum-index-" + index);
+            });
+        });
+    });
+       var _Rows = '功能key;功能名字;备注;操作'.split(';');
+    var _hideRows = $("#HiddenFieldNum").val().split(',');
+
+    for (var i = 0; i < _Rows.length; i++) {
+
+        if (_Rows[i].length > 0 && _hideRows.indexOf(i.toString()) < 0) {
+            $('#rowsBox' + i).attr("checked", true);
+        } else {
+            $(".rows-index-" + i + ",.colum-index-" + i).hide();
+        }
+    }
+    $('.rows-box').on('click', function(event){        var num=$("#HiddenFieldNum").val().split(",");        if (event.target.checked) {
+            $(".rows-index-"+event.target.value+",.colum-index-"+event.target.value).show();
+            for(var i=0;i<num.length;i++){
+                if(num[i]==event.target.value||num[i]=="")
+                    num.splice(i, 1);
+            }
+            $("#HiddenFieldNum").val(num.join(",")); 
+        }
+        else{
+
+            $(".rows-index-"+event.target.value+",.colum-index-"+event.target.value).hide();
+            num.push(event.target.value);
+            $("#HiddenFieldNum").val(num.join(","));
+        }
+    });
+    $("#checkRows").css("display", "none");
+</script>

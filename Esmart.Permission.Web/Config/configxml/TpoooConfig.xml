@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  说明：   该配置主要是配置XML下的SQL语句加载内存，也可存放key暂不使用
+-->
+<TpoooConfig configSource="Config\configxml\TpoooConfig.xml">
+ 
+  <!--
+      节点说明： 在有子MVC项目添加时，需要在此节点添加一个相应的子节点，用于程序集加载
+      规范说明：
+               Name:    模块的名字
+        Description:    对记录的描述说明
+    -->
+  
+  <WatchItems>
+    <!--
+      节点说明： 监控机制的配置节点，配置需要监视的内容对象
+      规范说明：
+               Type:    被监视的数据的类型
+            Content:    路径或监视的途径/URL
+             Filter:    过滤器
+        Description:    对记录的描述说明
+    -->
+    <Item Type="File" Content="{BaseDirectry}/XmlConfig" Filter="*.xml" Description="存放SQL/HQL的XML文件夹位置" />
+  </WatchItems>
+  <AppSetting>
+    <!--
+      节点说明：可以放置参数在此，加载在内存里暂时不启用
+      规范说明：  <add Key="none" Value="true" Description="该功能暂时不启用"/>
+    -->
+ </AppSetting>
+</TpoooConfig>

@@ -1,0 +1,30 @@
+﻿@model Esmart.Permission.Web.Models.Common.MagicSuggest
+@{
+    if (string.IsNullOrWhiteSpace(Model.ControlId))
+    {
+        throw new ArgumentNullException("ControlId");
+    }
+    if (string.IsNullOrWhiteSpace(Model.Name))
+    {
+        throw new ArgumentNullException("Name");
+    }
+    Model.ControlId = Model.ControlId.Trim();
+    Model.Name = Model.Name.Trim();
+}
+
+<div id="magicsuggest_@(Model.ControlId)"></div>
+<script>
+    var ms_data = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Data.Select(n => new { id = n.Value, name = n.Text })));
+    
+    var magicSuggest = magicSuggest || {};
+    $(function() {
+        magicSuggest.@Model.ControlId= $('#magicsuggest_@(Model.ControlId)').magicSuggest({
+            name: "@Model.Name",
+            placeholder: "@Model.PlaceHolder",
+            expandOnFocus: @Model.ExpandOnFocus.ToString().ToLowerInvariant(),
+            allowFreeEntries: false,
+            data:  ms_data
+        });
+    });
+
+</script>

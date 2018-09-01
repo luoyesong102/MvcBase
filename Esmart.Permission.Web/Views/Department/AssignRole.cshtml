@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "AssigningRole";
+}
+@model List<Esmart.Permission.Application.Models.ControlModel.RoleResponse>
+<style>
+    .checkbox { margin-right: 10px; }
+</style>
+@using (Html.BeginForm("AssignRoleSave", "Department", FormMethod.Post, new { @class = "form-inline", id = "formAssigningRole" }))
+{
+    int index = 0;
+    var rows = (Model.Count + 4) / 5;
+    <table class="table table-bordered">
+        @for (int i = 0; i < rows; i++)
+        {
+            <tr>
+                @for (int j = 0; j < 5; j++)
+                {
+                    if (index == Model.Count)
+                    {
+                        if (i == 0)
+                        {
+                            break;
+                        }
+                        <td></td>
+                    }
+                    else
+                    {
+                        var item = Model[index++];
+                        <td><label><input type="checkbox" name="roldId" value="@item.RoleId" @(item.IsChoice ? "checked" : "") />&nbsp;@item.RoleName</label></td>
+                    }
+                }
+            </tr>
+        }
+    </table>
+}
+

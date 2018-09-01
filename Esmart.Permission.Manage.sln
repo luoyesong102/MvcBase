@@ -1,0 +1,69 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Esmart.Permission.Web", "Esmart.Permission.Web\Esmart.Permission.Web.csproj", "{90368B93-B085-40F1-A958-26DC9A0AF4D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Esmart.Permission.Application", "Esmart.Permission.Application\Esmart.Permission.Application.csproj", "{F9CDA813-F658-4C98-BE40-4DF09ED8333D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Esmart.Framework", "Esmart.Framework\Esmart.Framework.csproj", "{D6836CE4-D0D5-412E-A8E6-10DA23147A20}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{B2071005-6CAB-4ABA-9F80-B5CEA07B7D1C}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+		TestServer|Any CPU = TestServer|Any CPU
+		TestServer|x86 = TestServer|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{90368B93-B085-40F1-A958-26DC9A0AF4D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90368B93-B085-40F1-A958-26DC9A0AF4D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90368B93-B085-40F1-A958-26DC9A0AF4D9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{90368B93-B085-40F1-A958-26DC9A0AF4D9}.Debug|x86.Build.0 = Debug|Any CPU
+		{90368B93-B085-40F1-A958-26DC9A0AF4D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90368B93-B085-40F1-A958-26DC9A0AF4D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90368B93-B085-40F1-A958-26DC9A0AF4D9}.Release|x86.ActiveCfg = Release|Any CPU
+		{90368B93-B085-40F1-A958-26DC9A0AF4D9}.Release|x86.Build.0 = Release|Any CPU
+		{90368B93-B085-40F1-A958-26DC9A0AF4D9}.TestServer|Any CPU.ActiveCfg = TestServer|Any CPU
+		{90368B93-B085-40F1-A958-26DC9A0AF4D9}.TestServer|Any CPU.Build.0 = TestServer|Any CPU
+		{90368B93-B085-40F1-A958-26DC9A0AF4D9}.TestServer|x86.ActiveCfg = TestServer|Any CPU
+		{90368B93-B085-40F1-A958-26DC9A0AF4D9}.TestServer|x86.Build.0 = TestServer|Any CPU
+		{F9CDA813-F658-4C98-BE40-4DF09ED8333D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9CDA813-F658-4C98-BE40-4DF09ED8333D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9CDA813-F658-4C98-BE40-4DF09ED8333D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F9CDA813-F658-4C98-BE40-4DF09ED8333D}.Debug|x86.Build.0 = Debug|Any CPU
+		{F9CDA813-F658-4C98-BE40-4DF09ED8333D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9CDA813-F658-4C98-BE40-4DF09ED8333D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9CDA813-F658-4C98-BE40-4DF09ED8333D}.Release|x86.ActiveCfg = Release|Any CPU
+		{F9CDA813-F658-4C98-BE40-4DF09ED8333D}.Release|x86.Build.0 = Release|Any CPU
+		{F9CDA813-F658-4C98-BE40-4DF09ED8333D}.TestServer|Any CPU.ActiveCfg = Release|Any CPU
+		{F9CDA813-F658-4C98-BE40-4DF09ED8333D}.TestServer|Any CPU.Build.0 = Release|Any CPU
+		{F9CDA813-F658-4C98-BE40-4DF09ED8333D}.TestServer|x86.ActiveCfg = Release|Any CPU
+		{F9CDA813-F658-4C98-BE40-4DF09ED8333D}.TestServer|x86.Build.0 = Release|Any CPU
+		{D6836CE4-D0D5-412E-A8E6-10DA23147A20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6836CE4-D0D5-412E-A8E6-10DA23147A20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6836CE4-D0D5-412E-A8E6-10DA23147A20}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D6836CE4-D0D5-412E-A8E6-10DA23147A20}.Debug|x86.Build.0 = Debug|Any CPU
+		{D6836CE4-D0D5-412E-A8E6-10DA23147A20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6836CE4-D0D5-412E-A8E6-10DA23147A20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6836CE4-D0D5-412E-A8E6-10DA23147A20}.Release|x86.ActiveCfg = Release|Any CPU
+		{D6836CE4-D0D5-412E-A8E6-10DA23147A20}.Release|x86.Build.0 = Release|Any CPU
+		{D6836CE4-D0D5-412E-A8E6-10DA23147A20}.TestServer|Any CPU.ActiveCfg = Release|Any CPU
+		{D6836CE4-D0D5-412E-A8E6-10DA23147A20}.TestServer|Any CPU.Build.0 = Release|Any CPU
+		{D6836CE4-D0D5-412E-A8E6-10DA23147A20}.TestServer|x86.ActiveCfg = Release|Any CPU
+		{D6836CE4-D0D5-412E-A8E6-10DA23147A20}.TestServer|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

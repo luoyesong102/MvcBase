@@ -1,0 +1,442 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D6836CE4-D0D5-412E-A8E6-10DA23147A20}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Esmart.Framework</RootNamespace>
+    <AssemblyName>Esmart.Framework</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Esmart.Framework.xml</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+    <NoWarn>1591,1573</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Esmart.Framework.xml</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=4.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.4.0.4\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="csredis">
+      <HintPath>..\packages\csredis.3.2.1\lib\net40\csredis.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.40\lib\net45\Dapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevTrends.MvcDonutCaching, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\DevTrends.MvcDonutCaching.dll</HintPath>
+    </Reference>
+    <Reference Include="EasyNetQ, Version=1.0.3.481, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EasyNetQ.1.0.3.481\lib\net45\EasyNetQ.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EasyNetQ.Management.Client, Version=0.51.1.105, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EasyNetQ.Management.Client.0.51.1.105\lib\net40\EasyNetQ.Management.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\packages\MongoDB.Bson.2.2.3\lib\net45\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\packages\MongoDB.Driver.2.2.3\lib\net45\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Core">
+      <HintPath>..\packages\MongoDB.Driver.Core.2.2.3\lib\net45\MongoDB.Driver.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Legacy">
+      <HintPath>..\packages\mongocsharpdriver.2.2.3\lib\net45\MongoDB.Driver.Legacy.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data">
+      <HintPath>..\packages\MySql.Data.6.9.8\lib\net45\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Oracle.DataAccess, Version=2.112.1.2, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Oracle.DataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="PlainElastic.Net, Version=1.1.55.0, Culture=neutral, PublicKeyToken=0930e76dfc03b7ac, processorArchitecture=MSIL">
+      <HintPath>..\packages\PlainElastic.Net.1.1.55\lib\Net40\PlainElastic.Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RabbitMQ.Client, Version=3.6.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
+      <HintPath>..\packages\RabbitMQ.Client.3.6.0\lib\net45\RabbitMQ.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ServiceStack, Version=3.9.70.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\ServiceStack.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Common, Version=3.9.70.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.OrmLite, Version=3.9.71.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\ServiceStack.OrmLite.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.OrmLite.SqlServer, Version=3.9.71.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\ServiceStack.OrmLite.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Redis, Version=3.9.71.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\ServiceStack.Redis.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.ServiceInterface, Version=3.9.70.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\ServiceStack.ServiceInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text, Version=3.9.71.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\ServiceStack.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="StackExchange.Redis, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\StackExchange.Redis.1.2.1\lib\net45\StackExchange.Redis.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Aop\AopBase.cs" />
+    <Compile Include="Aop\DatabaseEFLogger.cs" />
+    <Compile Include="Aop\Logger.cs" />
+    <Compile Include="Caching\CacheManager.cs" />
+    <Compile Include="Caching\Cache\CacheConfigContext.cs" />
+    <Compile Include="Caching\Cache\CacheHelper.cs" />
+    <Compile Include="Caching\Cache\ICacheProvider.cs" />
+    <Compile Include="Caching\Cache\LocalCacheProvider.cs" />
+    <Compile Include="Caching\Cache\ServiceFactory\ServiceFactory.cs" />
+    <Compile Include="Caching\Cache\ServiceFactory\ServiceHelper.cs" />
+    <Compile Include="Caching\Caching.cs" />
+    <Compile Include="Caching\ICache.cs" />
+    <Compile Include="Caching\NetCache.cs" />
+    <Compile Include="Caching\NotImpCache.cs" />
+    <Compile Include="Caching\RedisCache.cs" />
+    <Compile Include="Caching\Redis\Log.cs" />
+    <Compile Include="Caching\Redis\RedisBase.cs" />
+    <Compile Include="Caching\Redis\RedisConfigInfo.cs" />
+    <Compile Include="Caching\Redis\RedisHelper.cs" />
+    <Compile Include="Caching\Redis\RedisManager.cs" />
+    <Compile Include="Caching\Redis\RedisNonPoolHelper.cs" />
+    <Compile Include="Caching\Redis\RedisQueueHelper.cs" />
+    <Compile Include="CommonFunction\ApiCaller.cs" />
+    <Compile Include="CommonFunction\ApiMessageManager.cs" />
+    <Compile Include="CommonFunction\AssemblyHelper.cs" />
+    <Compile Include="CommonFunction\CloneMachine.cs" />
+    <Compile Include="CommonFunction\CommonFunction.cs" />
+    <Compile Include="CommonFunction\DbTableConvertor.cs" />
+    <Compile Include="CommonFunction\ObjectSerializer.cs" />
+    <Compile Include="CommonFunction\ReflectionUtils.cs" />
+    <Compile Include="CommonFunction\WCFHelper.cs" />
+    <Compile Include="CommonFunction\WcfInvokeFactory.cs" />
+    <Compile Include="CommonFunction\WcfServiceProxy.cs" />
+    <Compile Include="Config\CachedConfigContext.cs" />
+    <Compile Include="Config\ConfigContext.cs" />
+    <Compile Include="Config\ConfigFileBase.cs" />
+    <Compile Include="Config\ConfigNodeBase.cs" />
+    <Compile Include="Config\FileConfigService.cs" />
+    <Compile Include="Config\IConfigService.cs" />
+    <Compile Include="Config\Models\AdminMenuConfig.cs" />
+    <Compile Include="Config\Models\CacheConfig.cs" />
+    <Compile Include="Config\Models\DaoConfig.cs" />
+    <Compile Include="Config\Models\SettingConfig.cs" />
+    <Compile Include="Config\Models\SystemConfig.cs" />
+    <Compile Include="Config\Models\UploadConfig.cs" />
+    <Compile Include="DB\DapperForNet\Attributes\BaseAttribute.cs" />
+    <Compile Include="DB\DapperForNet\Common.cs" />
+    <Compile Include="DB\DapperForNet\CustomDynamicBuilder.cs" />
+    <Compile Include="DB\DapperForNet\DapperEx.cs" />
+    <Compile Include="DB\DapperForNet\DbBase.cs" />
+    <Compile Include="DB\DapperForNet\DynamicPropertyModel.cs" />
+    <Compile Include="DB\DapperForNet\ModelDes.cs" />
+    <Compile Include="DB\DapperForNet\ParamColumnModel.cs" />
+    <Compile Include="DB\DapperForNet\SqlMapper.cs" />
+    <Compile Include="DB\DapperForNet\SQL\OperationMethod.cs" />
+    <Compile Include="DB\DapperForNet\SQL\QueryOrder.cs" />
+    <Compile Include="DB\DapperForNet\SQL\SqlQuery.cs" />
+    <Compile Include="DB\Dapper\Utils\DataBaseType.cs" />
+    <Compile Include="DB\Dapper\Utils\DBUtils.cs" />
+    <Compile Include="DB\Dapper\Utils\IDBHelper.cs" />
+    <Compile Include="DB\Dapper\Utils\Parameter.cs" />
+    <Compile Include="DB\Dapper\SimpleCRUD.cs" />
+    <Compile Include="DB\Dapper\SimpleCRUDAsync.cs" />
+    <Compile Include="DB\Dapper\Utils\Utilities.cs" />
+    <Compile Include="DB\ES\ElasticSearchHelper.cs" />
+    <Compile Include="DB\Oracle\Oracledbhelp.cs" />
+    <Compile Include="DB\XmlSql\Condition\Condition.cs" />
+    <Compile Include="DB\XmlSql\Condition\ConditionBulider.cs" />
+    <Compile Include="DB\XmlSql\Condition\ConnectFlags.cs" />
+    <Compile Include="DB\XmlSql\Condition\Extansions.cs" />
+    <Compile Include="DB\XmlSql\Condition\Field.cs" />
+    <Compile Include="DB\XmlSql\Condition\IContition.cs" />
+    <Compile Include="DB\XmlSql\Condition\IField.cs" />
+    <Compile Include="DB\XmlSql\Condition\ISeed.cs" />
+    <Compile Include="DB\XmlSql\Condition\Operator.cs" />
+    <Compile Include="DB\XmlSql\Condition\SeedValueType.cs" />
+    <Compile Include="DB\XmlSql\Condition\SimpleSeed.cs" />
+    <Compile Include="Configuration\PathString.cs" />
+    <Compile Include="Configuration\AppConfig.cs" />
+    <Compile Include="Configuration\AppConfigurationHandler.cs" />
+    <Compile Include="Configuration\WatcherItem.cs" />
+    <Compile Include="EnumConstant\RedisCacheKey.cs" />
+    <Compile Include="EnumConstant\Constants.cs" />
+    <Compile Include="DB\MySql\DBHelper.cs" />
+    <Compile Include="DB\ES\CommandType.cs" />
+    <Compile Include="DB\ES\ESManagerHelper.cs" />
+    <Compile Include="DB\MsSql\CreateSmartSql.cs" />
+    <Compile Include="DB\MsSql\CreateSQl.cs" />
+    <Compile Include="DB\MsSql\IDbExec.cs" />
+    <Compile Include="DB\MsSql\ISmartDbExec.cs" />
+    <Compile Include="DB\Mongo\MongodbExtension.cs" />
+    <Compile Include="DB\Mongo\MongodbHelper.cs" />
+    <Compile Include="DB\MySql\MySqlHelper.cs" />
+    <Compile Include="DB\MySql\MySqlHelperExtension.cs" />
+    <Compile Include="DB\Oracle\OracleHelp.cs" />
+    <Compile Include="DB\XmlSql\QLType.cs" />
+    <Compile Include="DB\XmlSql\QueryParameter.cs" />
+    <Compile Include="DB\XmlSql\SqlEntity.cs" />
+    <Compile Include="DB\MsSql\SqlHelper.cs" />
+    <Compile Include="DB\MsSql\SQLManager.cs" />
+    <Compile Include="DB\XmlSql\SqlExecuteHelper.cs" />
+    <Compile Include="DB\XmlSql\SqlXmlHelper.cs" />
+    <Compile Include="DB\MsSql\TSqlExec.cs" />
+    <Compile Include="EnumConstant\GlobalConfig.cs" />
+    <Compile Include="Exceptions\BusinessException.cs" />
+    <Compile Include="Exceptions\ExceptionHanding.cs" />
+    <Compile Include="Exceptions\ExceptionManager.cs" />
+    <Compile Include="CommonFunction\ApiMessageHelper.cs" />
+    <Compile Include="CommonFunction\ExtensionHelper.cs" />
+    <Compile Include="Exceptions\JsonHelper.cs" />
+    <Compile Include="CommonFunction\SingleInstance.cs" />
+    <Compile Include="Logging\Log4NetDataHelper.cs" />
+    <Compile Include="ModelValidate\BaseViewModel.cs" />
+    <Compile Include="ModelValidate\IBaseViewModel.cs" />
+    <Compile Include="ModelValidate\ModelValidate.cs" />
+    <Compile Include="Model\MessageRequest.cs" />
+    <Compile Include="Model\MessageResponse.cs" />
+    <Compile Include="CommonFunction\ReflectHelper.cs" />
+    <Compile Include="Exceptions\SerialHelper.cs" />
+    <Compile Include="http\HttpClient.cs" />
+    <Compile Include="http\WebRequestHelper.cs" />
+    <Compile Include="FileSystem\FileWatcher.cs" />
+    <Compile Include="FileSystem\SqlFileMessage.cs" />
+    <Compile Include="DB\XmlSql\SqlUtility.cs" />
+    <Compile Include="http\HttpWebResponseUtility.cs" />
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Logging\LogHelper.cs" />
+    <Compile Include="Logging\LogTxt.cs" />
+    <Compile Include="Logging\Log4netLogger.cs" />
+    <Compile Include="Logging\LogManager.cs" />
+    <Compile Include="AttributeModel\NoLogAttribute.cs" />
+    <Compile Include="Logging\NotImpLog.cs" />
+    <Compile Include="Logging\TpoLogger.cs" />
+    <Compile Include="Logging\Trace.cs" />
+    <Compile Include="Messagging\IMessage.cs" />
+    <Compile Include="Messagging\IMessageBus.cs" />
+    <Compile Include="Messagging\MessageBus.cs" />
+    <Compile Include="Messagging\SingletonProxy.cs" />
+    <Compile Include="AttributeModel\ApiFlagAttribute.cs" />
+    <Compile Include="Model\BaseViewModel.cs" />
+    <Compile Include="EnumConstant\ConstantDefine.cs" />
+    <Compile Include="AttributeModel\DBAttribute.cs" />
+    <Compile Include="Model\DBPage.cs" />
+    <Compile Include="Model\IBaseViewModel.cs" />
+    <Compile Include="Model\JsonReturn.cs" />
+    <Compile Include="Logging\LogInfo.cs" />
+    <Compile Include="Model\ModelValidate.cs" />
+    <Compile Include="AttributeModel\PortalMoudelAttribute.cs" />
+    <Compile Include="Model\RabbitMQ.cs" />
+    <Compile Include="Model\MessageRequestPage.cs" />
+    <Compile Include="Model\SoaDataPage.cs" />
+    <Compile Include="Model\SoaModel.cs" />
+    <Compile Include="Model\SqlString.cs" />
+    <Compile Include="EnumConstant\SysEnum.cs" />
+    <Compile Include="AttributeModel\TpoAttributes.cs" />
+    <Compile Include="Exceptions\TpoException.cs" />
+    <Compile Include="AttributeModel\VaildAttribute.cs" />
+    <Compile Include="Caching\MyCache\Cache.cs" />
+    <Compile Include="Caching\MyCache\CacheHolder.cs" />
+    <Compile Include="Caching\MyCache\MyCacheManager.cs" />
+    <Compile Include="Caching\MyCache\ICache.cs" />
+    <Compile Include="Caching\MyCache\ICacheHolder.cs" />
+    <Compile Include="Module\ContextCollectHandler.cs" />
+    <Compile Include="Module\HttpModuleService.cs" />
+    <Compile Include="Patterns\Ballot\Ballot.cs" />
+    <Compile Include="Patterns\Ballot\BallotType.cs" />
+    <Compile Include="Patterns\Publisher\Publisher.cs" />
+    <Compile Include="Patterns\Publisher\Subject.cs" />
+    <Compile Include="Patterns\StateMachine\ACommand.cs" />
+    <Compile Include="Patterns\StateMachine\IState.cs" />
+    <Compile Include="Patterns\StateMachine\StateContext.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RabbitMq\ConsumerReceiveMessage.cs" />
+    <Compile Include="RabbitMq\ExchangeType.cs" />
+    <Compile Include="RabbitMq\Log.cs" />
+    <Compile Include="RabbitMq\LogFactory.cs" />
+    <Compile Include="RabbitMq\MQMonitor.cs" />
+    <Compile Include="RabbitMq\MQPubHelper.cs" />
+    <Compile Include="RabbitMq\MQSubHelper.cs" />
+    <Compile Include="RabbitMq\MyMessage.cs" />
+    <Compile Include="RabbitMq\RabbitMQBus.cs" />
+    <Compile Include="RabbitMq\SingletonProxy.cs" />
+    <Compile Include="RabbitMq\TaskfactoryHelper.cs" />
+    <Compile Include="Session\RedisSessionState.cs" />
+    <Compile Include="Session\RedisSessionStateStoreOptions.cs" />
+    <Compile Include="Soa\SoaAction.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Soa\SoaCreateClass.cs" />
+    <Compile Include="Soa\SoaManager.cs" />
+    <Compile Include="SSOSeanVersion\AccountsPrincipal.cs" />
+    <Compile Include="SSOSeanVersion\IUser.cs" />
+    <Compile Include="SSOSeanVersion\SiteIdentity.cs" />
+    <Compile Include="utinity\AppSettings.cs" />
+    <Compile Include="utinity\Collection.cs" />
+    <Compile Include="utinity\Converter.cs" />
+    <Compile Include="utinity\Cookie.cs" />
+    <Compile Include="utinity\Diff.cs" />
+    <Compile Include="utinity\Encrypt.cs" />
+    <Compile Include="utinity\EnumHelper.cs" />
+    <Compile Include="utinity\Exception.cs" />
+    <Compile Include="utinity\Fetch.cs" />
+    <Compile Include="utinity\FileWatchHelper.cs" />
+    <Compile Include="utinity\GeoHelper.cs" />
+    <Compile Include="utinity\ImageUtil.cs" />
+    <Compile Include="utinity\JsUtil.cs" />
+    <Compile Include="utinity\MailHelper.cs" />
+    <Compile Include="utinity\NetHelper.cs" />
+    <Compile Include="utinity\ObjectHelper.cs" />
+    <Compile Include="utinity\PermutationAndCombination.cs" />
+    <Compile Include="utinity\RegExp.cs" />
+    <Compile Include="utinity\SerializationHelper.cs" />
+    <Compile Include="utinity\SerializeHelper.cs" />
+    <Compile Include="utinity\StringHelper.cs" />
+    <Compile Include="utinity\StringUtil.cs" />
+    <Compile Include="utinity\ValidateCode\AnimatedGifEncoder.cs" />
+    <Compile Include="utinity\ValidateCode\GifDecoder.cs" />
+    <Compile Include="utinity\ValidateCode\LZWEncoder.cs" />
+    <Compile Include="utinity\ValidateCode\NeuQuant.cs" />
+    <Compile Include="utinity\ValidateCode\ValidateCodeType.cs" />
+    <Compile Include="utinity\ValidateCode\ValidateCode_Style1.cs" />
+    <Compile Include="utinity\ValidateCode\ValidateCode_Style10.cs" />
+    <Compile Include="utinity\ValidateCode\ValidateCode_Style11.cs" />
+    <Compile Include="utinity\ValidateCode\ValidateCode_Style12.cs" />
+    <Compile Include="utinity\ValidateCode\ValidateCode_Style13.cs" />
+    <Compile Include="utinity\ValidateCode\ValidateCode_Style14.cs" />
+    <Compile Include="utinity\ValidateCode\ValidateCode_Style2.cs" />
+    <Compile Include="utinity\ValidateCode\ValidateCode_Style3.cs" />
+    <Compile Include="utinity\ValidateCode\ValidateCode_Style4.cs" />
+    <Compile Include="utinity\ValidateCode\ValidateCode_Style5.cs" />
+    <Compile Include="utinity\ValidateCode\ValidateCode_Style6.cs" />
+    <Compile Include="utinity\ValidateCode\ValidateCode_Style7.cs" />
+    <Compile Include="utinity\ValidateCode\ValidateCode_Style8.cs" />
+    <Compile Include="utinity\ValidateCode\ValidateCode_Style9.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Caching\Cache\说明.txt" />
+    <Content Include="Config\说明.txt" />
+    <Content Include="DB\demo.txt" />
+    <Content Include="lib\DevTrends.MvcDonutCaching.dll" />
+    <Content Include="lib\Oracle.DataAccess.dll" />
+    <Content Include="lib\ServiceStack.Common.dll" />
+    <Content Include="lib\ServiceStack.dll" />
+    <Content Include="lib\ServiceStack.Interfaces.dll" />
+    <Content Include="lib\ServiceStack.OrmLite.dll" />
+    <Content Include="lib\ServiceStack.OrmLite.SqlServer.dll" />
+    <Content Include="lib\ServiceStack.Redis.dll" />
+    <Content Include="lib\ServiceStack.ServiceInterface.dll" />
+    <Content Include="lib\ServiceStack.Text.dll" />
+    <Content Include="Module\说明.txt" />
+    <Content Include="RabbitMq\proc.txt" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。启用“NuGet 程序包还原”可下载这些程序包。有关详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,327 @@
+body{
+  font-size: 14px;
+  color: #333;
+  font-family: arial, Microsoft Yahei, Hiragino Sans GB, sans-serif !important;
+}
+*{
+    margin:0;
+    padding:0;
+    list-style: none;
+}
+img{
+    display:block;
+}
+.nav-title-location{
+	height: 38px;
+    line-height: 38px;
+    background-color: #EEF6F9;
+    margin-bottom: 15px;
+}
+.no-padding{
+    padding-left:0px;
+    padding-right: 0px;
+}
+a:link, a:visited, a:hover, a:active, a:focus {
+  outline: 0;
+  text-decoration: none;
+  font-size: 14px;
+  color:#333;
+}
+.btn-add.btn{
+    background-color: #F7FAF1;
+    border:1px solid #D4D9DC;
+    box-sizing: content-box;
+}
+.btn-add.btn:focus{
+    outline:none;
+}
+.btn-add.btn span{
+    background-color: #8DD10C;
+    border-radius: 50%;
+    display: inline-block;
+    width:22px;
+    height:22px;
+    line-height: 22px;
+    color:#fff;
+    font-size: 13px;
+}
+.AppId-line-height{
+    height:34px;
+    line-height: 34px;
+}
+.btn-inquire.btn{
+    width:100%;
+    background-color: #3F97C9;
+    color:#fff !important;
+}
+.btn-inquire.btn:focus{
+    outline:none;
+}
+.duoji-nav{
+    margin-top: 10px;
+}
+.duoji-nav h6{
+    font-size: 14px;
+    height:24px;
+    line-height: 24px;
+    width:180px;
+    position: relative;
+}
+.duoji-nav span{
+    font-size: 12px;
+    margin-right: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+.duoji-nav .duoji-nav-cont{
+    margin-left: 20px;
+    display:none;
+}
+.h6-content{
+    width:390px;
+    border:1px solid #C7C9C8;
+    position:absolute;
+    top:12px;
+    left:96px;
+    z-index: 999;
+    background-color: #F0F9FE;
+}
+.h6-content-title{
+    background-color: #F0F5F8;
+    line-height: 36px;
+    padding-left: 20px;
+    border-bottom: 1px solid #B9C7CA;
+}
+.h6-content-title span{
+    margin-right: 10px;
+}
+.h6-content-data{
+    padding-top: 10px;
+    padding-left: 20px;
+}
+.modal-title{
+    padding:0px;
+    border:none;
+}
+.modal-title-div{
+    height:28px;
+    line-height: 28px;
+    background-color: #D0D0D0;
+    margin:2px;
+    border:1px solid #A5A5A5;
+    border-radius: 2px;
+}
+.modal-title-div span{
+    color:#000;
+    float:right;
+    margin-right: 10px;
+    font-size: 20px;
+    cursor:pointer;
+    font-weight: 600;
+}
+.nav-modal-cont{
+    padding:0px 10px;
+}
+.nav-modal-cont .form-group{
+    margin-bottom: 20px;
+}
+.nav-modal-title{
+    margin:0;
+    font-size: 16px;
+    font-weight: 600;
+    background:url("../images/xian.gif") repeat-x left bottom;
+    margin-bottom: 32px;
+}
+.nav-modal-title span{
+    display:inline-block;
+    padding-bottom: 8px;
+    border-bottom: 3px solid #63C5F4;
+}
+.red-color{
+    color:red;
+}
+.function-modal-cont{
+    height:554px;
+    border-left:1px solid #DDDDDD;
+    border-right:1px solid #DDDDDD;
+    border-bottom:1px solid #DDDDDD;
+    overflow-x:hidden;
+    overflow-y:auto;
+}
+.function-modal-cont table em{
+    display:inline-block;
+    height:18px;
+    width:15px;
+    position:relative;
+    cursor:pointer;
+    font-size: 12px;
+}
+.function-modal-cont table em sup{
+    position:absolute;
+    left:0px;
+    top:-1px;
+}
+.function-modal-cont table em sub{
+    position:absolute;
+    left:0px;
+    bottom:-1px;
+}
+.function-modal-cont table tr th{
+    background-color: #F0F5F9;
+}
+.margin-submit-top-10{
+    margin-top: 10px;
+}
+.no-padding-right{
+    padding-right:0px;
+}
+.filter-set label{
+    white-space: nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+.margin-top-10{
+    margin-top: 10px;
+}
+.margin-top-20{
+    margin-top: 20px;
+}
+.button-no-style{
+    padding:0;
+}
+.button-no-style button{
+    border:none;
+    background-color: transparent;
+}
+.button-no-style button:focus{
+    outline:none !important;
+    box-shadow: none;
+}
+.filter-tab-center tr th{
+    background-color: #E8E8E8;
+}
+.filter-tab-center tr th,.filter-tab-center tr td{
+    text-align: center;
+}
+.filter-tab-center button{
+    color:#FF9900;
+    background-color: transparent;
+    border:none;
+    margin:0px 5px;
+}
+.filter-tab-center button:focus{
+    outline:none;
+}
+.nav-fenye-wenzi{
+    line-height:34px;
+}
+.nav-fenye{
+    margin:0px 15px 0px 0px;
+}
+.nav-fenye li a{
+    color:#333;
+}
+.margin-bottom-20{
+    margin-bottom: 20px;
+}
+
+.switch-cont-tab .nav-tabs{
+    margin-bottom: 18px;
+}
+.switch-cont-tab .form-group{
+    margin-bottom: 20px;
+}
+.login-bj{
+    background-color: #F2F2F2;
+}
+.login-head{
+    width:100%;
+    height:50px;
+    line-height: 50px;
+    background-color: #14547A;
+}
+.login-head-left{
+    color:#A3DBFC;
+    margin-left: 20px;
+}
+.login-head-left span{
+    margin-right: 4px;
+}
+.login-head-right a{
+    color:#A3DBFC; 
+    margin-right:20px;
+}
+.login-kuang{
+    width:780px;
+    position:fixed;
+    left:50%;
+    top:50%;
+    margin-top: -245px;
+    margin-left: -390px;
+    height:490px;
+    background-color: #fff;
+    padding:50px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px #ccc;
+}
+.login-kuang h1{
+    font-size: 22px;
+    letter-spacing: 9px;
+    color:#563D84;
+    margin:0;
+    padding-left: 100px;
+    background:url("../img/login.png") no-repeat left center;
+    width:286px;
+    margin:0 auto;
+    height:48px;
+    line-height: 18px;
+    padding-top:7px;
+}
+.login-kuang h1 small{
+    letter-spacing: 0px;
+    font-size: 12px;
+    color:#563D84;
+}
+.login-cont{
+    width:100%;
+    height:300px;
+    margin-top: 42px;
+    background-color: #F8F7F6;
+    border-radius: 4px;
+    box-shadow: 0px 0px 5px #F8F7F6;
+}
+.login-cont .pull-left{
+    width:217px;
+}
+.login-cont .pull-left img{
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    height:300px;
+}
+.login-cont .login-right{
+    width:342px;
+    margin-left:58px;
+}
+.login-cont .login-right h2{
+    color:#AA8D4B;
+    font-size: 20px;
+    margin-top: 34px;
+    margin-bottom: 28px;
+}
+.login-cont .login-right h2 span{
+    font-size: 15px;
+    color:#C4C4C4;
+    margin-left: 4px;
+}
+.login-cont .login-right .form-group{
+    margin-bottom: 26px;
+}
+.login-cont .login-right button.btn{
+    background-color: #3D98C7;
+    color:#fff;
+    width:100px;
+    margin-right: 20px;
+}
+.login-cont .login-right button.btn:focus{
+    outline:none;
+}

@@ -1,0 +1,151 @@
+﻿@{
+    Layout = null;
+    var token = Request.QueryString["Token"];
+}
+@model Esmart.Permission.Application.Models.ControlModel.MenuResponses
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>基础平台管理系统</title>
+    @Styles.Render("~/Content/main")
+    <script>
+        var pageGlobalToken = "@token";
+    </script>
+    @if (!string.IsNullOrEmpty(Model.HomeUrl))
+    {
+        <script>
+            pageHomeUrl = "@Model.HomeUrl";
+           
+        </script>
+    }
+</head>
+<body style="min-height:700px; ">
+    <div class="pace pace-active hidden">
+        <div class="pace-progress  " data-progress-text="100%" data-progress="100" style="-webkit-transform: translate3d(100%, 100px, 0); transform: translate3d(100%, 0, 0);">
+            <div class="pace-progress-inner"></div>
+        </div>
+    </div>
+    <div id="layout_menu_header" class="page-navbar  header-fixed">
+        <!-- .navbar-brand -->
+        <a href="#" class="navbar-brand hidden-xs hidden-sm " id="auto_layout_header">
+            <img src="@Url.Content("~/Content/img/logo.png")" class="logo hidden-xs" alt="huiche logo" />
+            <img src="@Url.Content("~/Content/img/logosm.png")" class="logo-sm hidden-lg hidden-md" alt="huiche logo" />
+        </a>
+        <!-- / navbar-brand -->
+        <!-- .no-collapse -->
+        <div class="navbar-no-collapse">
+            <!-- top left nav -->
+            <ul class="nav navbar-nav">
+                <li class="toggle-sidebar">
+                    <a href="#" id="navbar-no-collapse">
+                        <i class="fa fa-reorder"></i>
+                        <span class="sr-only">折叠侧边栏</span>
+                    </a>
+                </li>
+            </ul>
+            <!-- / top left nav -->
+            <!-- top right nav -->
+            <ul class="nav navbar-nav navbar-right">
+                <li class=" dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="glyphicon glyphicon-home"></i>&nbsp;<span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu right  dropdown-notification" role="menu">
+                        @foreach (var app in ViewBag.Apps)
+                        {
+                        <li>
+                            @if (app.Selected)
+                                {
+                                <a href="@app.Value" style="background-color:#f5f5f5; ">
+                                    <i class="glyphicon glyphicon-star"></i> @app.Text
+                                </a>
+                                }
+                                else
+                                {
+                                <a href="@app.Value">
+                                    <i class="glyphicon glyphicon-star-empty"></i> @app.Text
+                                </a>
+                                }
+                        </li>
+                        }
+
+                    </ul>
+                    </li>
+
+                    <li class="dropdown gray-lighter-bg">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <i class="glyphicon glyphicon-user mr10"></i> @User.Identity.Name<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="@Url.Action("ModifyPassword","Account")?uid=@ViewBag.CurrentUserId">修改密码</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/Account/Login">退出</a></li>
+                        </ul>
+                    </li>
+</ul>
+            <!-- / top right nav -->
+        </div>
+        <!-- / collapse -->
+    </div>
+    <div id="wrapper" class="white-bg">
+        <aside id="autobay_layout_sidebar" class="page-sidebar ">
+            <div class="sidebar-inner">
+
+                <div class="sidebar-scrollarea">
+                    <div class="side-nav">
+                        <ul class="nav" id="sidebarNav">
+                            @foreach (var menu in Model.Menus)
+                            {
+                                <li>
+                                    <a href="@menu.Url">
+                                        @if (menu.Children != null && menu.Children.Count > 0)
+                                        {
+                                            <i class="l-arrows-right sideNav-arrow rotate90"></i>
+                                        }
+                                        <i class="@menu.Iconurl"></i> <span class="txt">@menu.Name</span>
+                                    </a>
+                                    @if (menu.Children != null && menu.Children.Count > 0)
+                                    {
+                                        <ul class="sub">
+                                            @foreach (var child in menu.Children)
+                                            {
+                                                <li>
+                                                    <a href="@child.Url"><span class="txt">@child.Name </span></a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    }
+                                </li>
+                            }
+
+                        </ul>
+                    </div>
+                    <!-- / side-nav -->
+                </div>
+                <!-- End .sidebar-scrollarea -->
+            </div>
+            <!-- End .sidebar-inner -->
+        </aside>
+
+        <div id="autobay_layout_content" class="page-content sidebar-page  clearfix">
+            <div class="page-content-wrapper gray-lighter-bg ">
+                <div class="page-content-inner white-bg color-dark" id="contentRenderBody" style="height:600px; overflow-y:auto; overflow-x:hidden;padding-top:10px;">
+                </div>
+            </div>
+            <!-- / page-content-wrapper -->
+        </div>
+        <div id="layout_alert_submit" class="alert  alert-danger alert-dismissible" role="alert" style="display: none; position: fixed; right: 0; top:0; z-index:9999">
+            <p></p>
+        </div>
+        <div id="layout_progress_submit" class="progress" style="display: none; position: fixed; height:50px; right: 10px; top: 0; z-index: 9999; ">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:1%;line-height:50px;">
+            </div>
+        </div>
+        <!-- / page-content -->
+    </div>
+    @Scripts.Render("~/bundles/script")
+</body>
+</html>

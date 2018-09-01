@@ -1,0 +1,52 @@
+﻿@using Esmart.Permission.Web.Models.Common
+@model IEnumerable<Esmart.Permission.Application.Models.ControlModel.RoleResponse>
+<style>
+    .table th, .table td { text-align: center; }
+</style>
+<table id="main_content_table" class="table table-hover table-bordered">
+    <thead>
+        <tr role="row">
+            <th class="sorting_disabled" style="width: 10px; ">
+                <input type="checkbox" value="0" onchange="checkAll(this)" id="checkAll" />
+            </th>
+            <th class="sorting_disabled" style="width: 100px; ">角色名</th>
+            <th class="sorting_disabled" style="width: 100px; ">开始有效期</th>
+            <th class="sorting_disabled" style="width: 100px; ">有效期截至</th>
+            <th class="sorting_disabled" style="width: 100px; ">备注</th>
+            <th class="sorting_disabled" style="width: 100px; ">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="@(item.IsChoice ? "success" : "")">
+                <td><input type="checkbox" value="@item.RoleId" @(item.IsChoice ? "checked" : "") /></td>
+                <td><a class="role-assign" role="button" onclick="showUsersOfRole(@item.RoleId,'@item.RoleName')">@item.RoleName</a></td>
+                <td>@item.StartTime</td>
+                <td>@item.EndTime</td>
+                <td>@item.Remark</td>
+                <td><a class="role-assign" title="查看角色关联的用户" role="button" onclick="showUsersOfRole(@item.RoleId,'@item.RoleName')"><i class="glyphicon glyphicon-search"></i></a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    var viewData = viewData || {};
+    if (viewData.root) {
+        $("#checkAll").attr("disabled", "disabled");
+        $("#btnSave").attr("disabled", "disabled");
+        $('#main_content_table > tbody > tr').find("td:first input").attr("disabled", "disabled");
+    }
+    function checkAll(srcEle) {
+        $('#main_content_table > tbody > tr').find("td:first input").prop("checked", $(srcEle).prop("checked"));
+    }
+    function showUsersOfRole(roleId, roleName) {
+        main.model('@Url.Action("UserListOfRole")?roleId=' + roleId, {
+            title: '查看角色[' + roleName + ']关联的用户', buttons: ["close"],
+            callback: function (resp) {
+
+            }
+        });
+    }
+</script>
